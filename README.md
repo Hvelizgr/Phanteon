@@ -1509,6 +1509,36 @@ public MainPage(MainViewModel viewModel)
 
 2. En XAML, usar `x:DataType` para IntelliSense:
 ```xml
+<!-- Resources/App.xaml -->
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Phanteon.Helpers.Converters"
+             x:Class="Phanteon.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- Converters -->
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <converters:BoolToStatusConverter x:Key="BoolToStatusConverter" />
+
+            <!-- Colores de la aplicación -->
+            <Color x:Key="PrimaryColor">#512BD4</Color>
+            <Color x:Key="SecondaryColor">#DFD8F7</Color>
+            <Color x:Key="BackgroundColor">#FFFFFF</Color>
+            <Color x:Key="PrimaryTextColor">#2B2B2B</Color>
+            <Color x:Key="SecondaryTextColor">#666666</Color>
+            <Color x:Key="AccentColor">#512BD4</Color>
+
+            <!-- Colores para estado activo/inactivo -->
+            <Color x:Key="ActiveColor">#4CAF50</Color>    <!-- Verde -->
+            <Color x:Key="InactiveColor">#F44336</Color> <!-- Rojo -->
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+
 
 ```
 
