@@ -277,63 +277,6 @@ dotnet build /bl
 ```
 
 ---
-
-## 📝 Configuración de MauiProgram.cs
-
-El archivo `MauiProgram.cs` es el punto de entrada para configurar servicios e inyección de dependencias:
-
-```csharp
-public static class MauiProgram
-{
-    public static MauiApp CreateMauiApp()
-    {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .UseMauiCommunityToolkit()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
-
-        // Registrar servicios
-        builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
-
-        // Registrar ViewModels
-        builder.Services.AddTransient<MainViewModel>();
-
-        // Registrar Views
-        builder.Services.AddTransient<MainPage>();
-
-#if DEBUG
-        builder.Logging.AddDebug();
-#endif
-
-        return builder.Build();
-    }
-}
-```
-
----
-
-## 🐛 Solución de Problemas
-
-### Error XA0129 (Android)
-**Síntoma:** Error al implementar archivos `.__override__`
-
-**Solución:** Ya está configurado en `Phanteon.csproj`:
-```xml
-<AndroidUseAssemblyStore>false</AndroidUseAssemblyStore>
-<AndroidEnableAssemblyCompression>false</AndroidEnableAssemblyCompression>
-```
-
-### SecureStorage no funciona
-**Verificar:**
-1. Permiso INTERNET en AndroidManifest.xml (para Android)
-2. Que la app tenga permisos de almacenamiento
-3. Usar try-catch para manejar excepciones de plataforma
-
 ---
 
 ## 📚 Referencias
@@ -348,19 +291,6 @@ public static class MauiProgram
 ### Tutoriales
 - [MVVM en .NET MAUI - Microsoft Learn](https://learn.microsoft.com/training/modules/use-mvvm-pattern-xamarin-forms/)
 - [Inyección de Dependencias - Microsoft Docs](https://learn.microsoft.com/dotnet/core/extensions/dependency-injection)
-
----
-
-## ✅ Checklist de Calidad
-
-- [ ] Código compila sin errores ni warnings
-- [ ] Estructura de carpetas organizada
-- [ ] ViewModels usan `[ObservableProperty]` y `[RelayCommand]`
-- [ ] Servicios registrados en DI
-- [ ] Comentarios XML en métodos públicos
-- [ ] Nombres descriptivos en español
-- [ ] Manejo de errores con try-catch
-- [ ] README actualizado
 
 ---
 
