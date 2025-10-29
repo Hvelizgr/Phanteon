@@ -1,17 +1,8 @@
-﻿using System;
-using System.Net.Http;
-using Microsoft.Maui;
+﻿using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
-using Refit;
-using Refit.NewtonsoftJson;
-using Polly;
-using Polly.Extensions.Http;
-using Phanteon.Services.Interfaces;
-using Phanteon.Services.Implementations;
-using Phanteon.ViewModels;
-        
+
 namespace Phanteon
 {
     public static class MauiProgram
@@ -21,6 +12,7 @@ namespace Phanteon
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

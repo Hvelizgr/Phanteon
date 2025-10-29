@@ -1,4 +1,4 @@
-﻿namespace Phanteon
+﻿namespace Phanteon.Views
 {
     public partial class MainPage : ContentPage
     {

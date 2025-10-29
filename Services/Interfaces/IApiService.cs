@@ -3,7 +3,7 @@ using Refit;
 
 namespace Phanteon.Services.Interfaces
 {
-    // Ejemplo mínimo de interfaz Refit
+    // Ejemplo mï¿½nimo de interfaz Refit
     public interface IApiService
     {
         [Get("/status")]
@@ -12,6 +12,6 @@ namespace Phanteon.Services.Interfaces
 
     public class ApiStatusDto
     {
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty;
     }
 }

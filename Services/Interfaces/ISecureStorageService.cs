@@ -4,7 +4,7 @@ namespace Phanteon.Services.Interfaces
     public interface ISecureStorageService
     {
         bool HasKey(string key);
-        string Get(string key);
+        string? Get(string key);
         void Set(string key, string value);
         void Remove(string key);
     }
