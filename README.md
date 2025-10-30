@@ -1409,6 +1409,7 @@ dotnet build /bl
 ```
 
 ---
+<<<<<<< HEAD
 
 ## 📝 Configuración de MauiProgram.cs
 
@@ -1611,6 +1612,7 @@ namespace Phanteon.ViewModels
 }
 ```
 
+>>>>>>> 25ca9c43c61af9e74cf038a6dee521a1c6d1cde6
 ---
 
 ### 📱 Ejemplo 3: Helpers - Converters para XAML
@@ -1702,6 +1704,7 @@ namespace Phanteon.Helpers.Converters
 
 ---
 
+<<<<<<< HEAD
 ### 📱 Ejemplo 4: Servicio completo con manejo de errores
 
 ```csharp
@@ -2182,6 +2185,8 @@ Para que todos en el equipo hablen el mismo idioma:
 
 ---
 
+=======
+>>>>>>> 25ca9c43c61af9e74cf038a6dee521a1c6d1cde6
 ## 📄 Licencia
 
 Este proyecto es de uso educativo para fines académicos.
