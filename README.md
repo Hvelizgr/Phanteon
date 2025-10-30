@@ -2036,58 +2036,6 @@ dotnet build /p:EmitCompilerGeneratedFiles=true
 
 ---
 
-## ✅ Checklist de Calidad del Proyecto
-
-Usa esta lista para verificar que tu proyecto cumple con las buenas prácticas:
-
-### 📋 Código
-
-- [ ] El proyecto compila sin errores ni warnings
-- [ ] Todos los paquetes NuGet están actualizados
-- [ ] No hay código comentado (elimínalo)
-- [ ] Los nombres de variables están en español (según el estándar del proyecto)
-- [ ] Los métodos públicos tienen comentarios XML `///`
-
-### 🏗️ Arquitectura
-
-- [ ] Se sigue el patrón MVVM correctamente
-- [ ] Las Views solo tienen XAML (mínimo code-behind)
-- [ ] Los ViewModels usan `[ObservableProperty]` y `[RelayCommand]`
-- [ ] Los Services están en carpetas Interfaces/ e Implementations/
-- [ ] Todos los servicios están registrados en `MauiProgram.cs`
-- [ ] Se usa inyección de dependencias (no `new Service()`)
-
-### 🔒 Seguridad
-
-- [ ] Las contraseñas se guardan en `SecureStorage`, no en `Preferences`
-- [ ] No hay credenciales hardcodeadas en el código
-- [ ] Los tokens de API se almacenan de forma segura
-- [ ] Se valida entrada del usuario antes de enviar a la API
-
-### 🎨 Interfaz
-
-- [ ] La app se ve bien en diferentes tamaños de pantalla
-- [ ] Hay indicadores de carga (`ActivityIndicator`) en operaciones largas
-- [ ] Los botones se deshabilitan mientras se procesa
-- [ ] Hay mensajes de error claros para el usuario
-- [ ] La navegación funciona correctamente
-
-### 🧪 Manejo de Errores
-
-- [ ] Todos los métodos async tienen `try-catch`
-- [ ] Se muestra un mensaje amigable al usuario en caso de error
-- [ ] Los errores se loguean en consola para debugging
-- [ ] Se maneja la falta de conexión a internet
-
-### 📝 Documentación
-
-- [ ] El README está actualizado
-- [ ] Se documentaron los servicios y sus métodos
-- [ ] Hay comentarios explicando lógica compleja
-- [ ] Se incluyeron los nombres de todos los integrantes del equipo
-
----
-
 ## 🎯 Consejos para el Trabajo en Equipo
 
 ### 🔀 Usando Git correctamente
@@ -2123,10 +2071,9 @@ git push origin feature/login-page
 ### 🚫 Errores comunes a evitar
 
 1. **No hacer commits gigantes**: Haz commits pequeños y frecuentes
-2. **No comentar código**: Elimínalo, Git guarda el historial
-3. **No hardcodear valores**: Usa configuración o constantes
-4. **No mezclar español e inglés**: Elige uno y sé consistente
-5. **No ignorar warnings**: Siempre arregla los warnings
+2. **No hardcodear valores**: Usa configuración o constantes
+3. **No mezclar español e inglés**: Elige uno y sé consistente
+4. **No ignorar warnings**: Siempre arregla los warnings
 
 ---
 
@@ -2149,31 +2096,6 @@ Para que todos en el equipo hablen el mismo idioma:
 
 ---
 
-## 🚀 Próximos Pasos (Después de completar lo básico)
-
-1. **Implementar base de datos local**
-   - Usar SQLite para datos offline
-   - Sincronizar con la API cuando hay internet
-
-2. **Agregar autenticación biométrica**
-   - Huella dactilar / Face ID
-   - Usar MAUI Essentials
-
-3. **Implementar notificaciones push**
-   - Firebase Cloud Messaging
-   - Notificaciones locales
-
-4. **Mejorar la UI**
-   - Animaciones con Community Toolkit
-   - Temas claro/oscuro
-   - Personalización
-
-5. **Testing**
-   - Unit Tests para ViewModels
-   - Integration Tests para Services
-
----
-
 ## 📊 Criterios de Evaluación (Ejemplo)
 
 | Criterio | Puntos | Qué evaluar |
@@ -2193,39 +2115,10 @@ Para que todos en el equipo hablen el mismo idioma:
 Este proyecto es de uso educativo para fines académicos.
 
 ---
-
-## 🤝 Contribuciones
-
-Si encuentras un error o quieres mejorar algo:
-
-1. Haz un fork del repositorio
-2. Crea una rama para tu mejora
-3. Haz un commit con tus cambios
-4. Abre un Pull Request
-
----
-
-## 📞 Contacto y Soporte
-
-**Dudas o problemas con el proyecto:**
-- Consultar con el equipo en reuniones semanales
-- Revisar la sección de [Solución de Problemas](#-solución-de-problemas)
-- Buscar en [Stack Overflow](https://stackoverflow.com/questions/tagged/.net-maui)
-
----
-
-## 🏆 Reconocimientos
-
-- **Microsoft** por .NET MAUI
-- **Comunidad .NET** por las herramientas open-source
-- **Nuestro profesor** por la guía y apoyo
-
 ---
 
 **📅 Última actualización:** Octubre 2025
 **📌 Versión del proyecto:** 1.0.0
-**🎓 Curso:** _[Nombre del curso]_
-**🏫 Universidad:** _[Nombre de la universidad]_
 
 ---
 
