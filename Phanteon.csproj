@@ -58,4 +58,13 @@
 		<PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<!-- Excluir la carpeta Example_BD del proyecto -->
+		<Compile Remove="Example_BD\**" />
+		<EmbeddedResource Remove="Example_BD\**" />
+		<MauiCss Remove="Example_BD\**" />
+		<MauiXaml Remove="Example_BD\**" />
+		<None Remove="Example_BD\**" />
+	</ItemGroup>
+
 </Project>
