@@ -413,109 +413,7 @@ private async Task RegistrarEvento()
 }
 ```
 
----
-
-## 🔗 Ejemplo Completo: DetalleDispositivoViewModel
-
-Este ViewModel usa **3 servicios** para mostrar información completa:
-
-```csharp
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Phanteon.Models;
-using Phanteon.Services.Interfaces;
-using System.Collections.ObjectModel;
-
-namespace Phanteon.ViewModels
-{
-    [QueryProperty(nameof(DispositivoId), "id")]
-    public partial class DetalleDispositivoViewModel : ObservableObject
-    {
-        private readonly IDispositivosService _dispositivosService;
-        private readonly IHistorialDispositivosService _historialService;
-        private readonly IAlertasService _alertasService;
-
-        public DetalleDispositivoViewModel(
-            IDispositivosService dispositivosService,
-            IHistorialDispositivosService historialService,
-            IAlertasService alertasService)
-        {
-            _dispositivosService = dispositivosService;
-            _historialService = historialService;
-            _alertasService = alertasService;
-        }
-
-        [ObservableProperty]
-        private int dispositivoId;
-
-        [ObservableProperty]
-        private Dispositivo? dispositivo;
-
-        [ObservableProperty]
-        private ObservableCollection<HistorialDispositivo> historial = new();
-
-        [ObservableProperty]
-        private ObservableCollection<Alerta> alertas = new();
-
-        [ObservableProperty]
-        private bool estaCargando = false;
-
-        [RelayCommand]
-        private async Task CargarDetalle()
-        {
-            EstaCargando = true;
-
-            try
-            {
-                // 1. Cargar información del dispositivo
-                Dispositivo = await _dispositivosService.GetDispositivoByIdAsync(DispositivoId);
-
-                // 2. Cargar historial
-                var todoHistorial = await _historialService.GetAllHistorialAsync();
-                var historialFiltrado = todoHistorial
-                    .Where(h => h.IdDispositivo == DispositivoId)
-                    .OrderByDescending(h => h.FechaHora)
-                    .Take(10)
-                    .ToList();
-
-                Historial.Clear();
-                foreach (var evento in historialFiltrado)
-                {
-                    Historial.Add(evento);
-                }
-
-                // 3. Cargar alertas activas
-                var todasAlertas = await _alertasService.GetAllAlertasAsync();
-                var alertasActivas = todasAlertas
-                    .Where(a => a.IdDispositivo == DispositivoId && a.Estado != "Resuelta")
-                    .OrderByDescending(a => a.FechaHora)
-                    .ToList();
-
-                Alertas.Clear();
-                foreach (var alerta in alertasActivas)
-                {
-                    Alertas.Add(alerta);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al cargar detalle: {ex.Message}");
-                await Shell.Current.DisplayAlert("Error", "No se pudo cargar el detalle", "OK");
-            }
-            finally
-            {
-                EstaCargando = false;
-            }
-        }
-    }
-}
-```
-
----
-
-## ⚙️ Configuración de la API
-
-### URL Base:
+-
 
 Configurada en `Helpers/ApiConfiguration.cs`:
 
@@ -528,7 +426,7 @@ public static string BaseUrl { get; set; } = "https://10.0.2.2:7026";
 ```csharp
 public static TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(30);
 ```
-
+---
 ### Manejo de SSL (DEBUG):
 
 Configurado en `MauiProgram.cs` líneas 27-31:
@@ -582,9 +480,4 @@ catch (Exception ex)
 - **[01_QUICK_START.md](01_QUICK_START.md)** - Inicio rápido
 - **[02_CONFIGURACION_BACKEND.md](02_CONFIGURACION_BACKEND.md)** - Configurar backend
 - **[03_DIVISION_TAREAS.md](03_DIVISION_TAREAS.md)** - División de trabajo
-- **[06_ERRORES_COMUNES.md](06_ERRORES_COMUNES.md)** - Solución de problemas
-
----
-
-_Actualizado: 29/10/2024_
-_Autor: Héctor Eduardo Véliz Girón_
+- **[06_ERRORES_COMUNES.md](06_ERRORES_COMUNES.md)** - Solución de problemasS

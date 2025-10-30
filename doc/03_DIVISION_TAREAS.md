@@ -13,7 +13,7 @@
 
 ---
 
-## ✅ TAREAS COMPLETADAS (Héctor)
+## ✅ TAREAS COMPLETADAS 
 
 ### 🏗️ Infraestructura del Proyecto
 
@@ -162,7 +162,7 @@ Ubicación: `Helpers/`
 
 ---
 
-## 👤 PERSONA 1: ViewModels Faltantes
+## ViewModels Faltantes
 
 ### Responsabilidades:
 Crear 3 ViewModels faltantes que implementen la lógica de presentación.
@@ -355,7 +355,7 @@ public partial class DetalleDispositivoViewModel : ObservableObject
 
 ---
 
-## 👤 PERSONA 2: Páginas XAML Faltantes
+## 👤 Páginas XAML Faltantes
 
 ### Responsabilidades:
 Crear 3 páginas XAML con sus code-behind que implementen las interfaces de usuario.
@@ -507,9 +507,9 @@ Página de detalle de un dispositivo específico con su información, historial 
 
 ---
 
-### Checklist Persona 2:
+### Checklist:
 
-- [ ] Crear LoginPage.xaml
+- [x] Crear LoginPage.xaml
   - [ ] Entry de correo
   - [ ] Entry de password
   - [ ] Button iniciar sesión
@@ -524,7 +524,7 @@ Página de detalle de un dispositivo específico con su información, historial 
 - [ ] Crear AlertasPage.xaml
   - [ ] ToolbarItem actualizar
   - [ ] Filtros por tipo
-  - [ ] CollectionView con alertas
+  - [x] CollectionView con alertas
   - [ ] ItemTemplate con colores
   - [ ] ActivityIndicator
 
@@ -550,7 +550,7 @@ Página de detalle de un dispositivo específico con su información, historial 
 
 ---
 
-## 👤 PERSONA 3: Navegación y Validaciones
+## 👤  Navegación y Validaciones
 
 ### Responsabilidades:
 Configurar el sistema de navegación completo y agregar validaciones en todos los ViewModels.
@@ -787,7 +787,7 @@ if (Connectivity.NetworkAccess != NetworkAccess.Internet)
 
 ---
 
-### Checklist Persona 3:
+### Checklist:
 
 - [ ] Configurar AppShell.xaml
   - [ ] FlyoutItem Dashboard
@@ -829,52 +829,6 @@ if (Connectivity.NetworkAccess != NetworkAccess.Internet)
   - [ ] Menú lateral funciona
 
 ---
-
-## 📅 Cronograma Sugerido
-
-### Semana 1:
-- **Todos:** Configurar backend y entorno de desarrollo
-- **Persona 1:** Crear LoginViewModel
-- **Persona 2:** Crear LoginPage
-- **Persona 3:** Configurar AppShell básico
-
-### Semana 2:
-- **Persona 1:** Crear AlertasViewModel y DetalleDispositivoViewModel
-- **Persona 2:** Crear AlertasPage y DetalleDispositivoPage
-- **Persona 3:** Completar configuración de navegación
-
-### Semana 3:
-- **Todos:** Testing y corrección de errores
-- **Persona 3:** Agregar validaciones y manejo de errores
-- **Integración:** Probar flujo completo de la aplicación
-
-### Semana 4:
-- **Todos:** Pruebas finales, corrección de bugs, documentación
-- **Preparar presentación del proyecto**
-
 ---
 
-## 📞 Comunicación del Equipo
-
-- **Daily Standup (opcional):** 15 minutos diarios para sincronizar avances
-- **Reuniones semanales:** Revisión de progreso y resolución de bloqueadores
-- **Canal de comunicación:** [WhatsApp/Discord/Slack del equipo]
-
----
-
-## ✅ Criterios de Aceptación
-
-Cada tarea se considera completada cuando:
-
-1. ✅ El código compila sin errores ni warnings
-2. ✅ Está registrado correctamente en MauiProgram.cs
-3. ✅ Funciona correctamente (probado)
-4. ✅ Tiene manejo de errores con try-catch
-5. ✅ Tiene validaciones donde corresponde
-6. ✅ Sigue el mismo estilo de código del proyecto
-7. ✅ Está documentado con comentarios básicos
-
----
-
-_Actualizado: 29/10/2024_
-_Autor: Héctor Eduardo Véliz Girón_
+S
