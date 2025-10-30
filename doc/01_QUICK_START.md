@@ -25,31 +25,7 @@ cd DevicesAPI
 
 Abre `appsettings.Development.json` y configura tu conexión:
 
-**Opción A - SQL Server con Windows Authentication:**
-```json
-{
-  "ConnectionStrings": {
-    "AZURE_SQL_CONNECTIONSTRING": "Server=localhost;Database=DevicesDB;Trusted_Connection=True;TrustServerCertificate=True;"
-  }
-}
-```
 
-**Opción B - SQL Server Express:**
-```json
-{
-  "ConnectionStrings": {
-    "AZURE_SQL_CONNECTIONSTRING": "Server=localhost\\SQLEXPRESS;Database=DevicesDB;Trusted_Connection=True;TrustServerCertificate=True;"
-  }
-}
-```
-
-**Opción C - SQL Server con usuario/contraseña:**
-```json
-{
-  "ConnectionStrings": {
-    "AZURE_SQL_CONNECTIONSTRING": "Server=localhost;Database=DevicesDB;User Id=sa;Password=TuPassword;TrustServerCertificate=True;"
-  }
-}
 ```
 
 ### 1.3 Crear la base de datos
@@ -60,7 +36,7 @@ dotnet tool install --global dotnet-ef
 
 # Crear la base de datos
 dotnet ef database update
-```
+
 
 **Salida esperada:**
 ```
@@ -202,7 +178,7 @@ start Phanteon.sln
 
 ## 🛠️ EMPEZAR A DESARROLLAR
 
-### Para Persona 1 (ViewModels):
+## (ViewModels):
 
 **Crear un nuevo ViewModel:**
 
@@ -265,7 +241,7 @@ builder.Services.AddTransient<AlertasViewModel>();
 
 ---
 
-### Para Persona 2 (Páginas XAML):
+### (Páginas XAML):
 
 **Crear una nueva página:**
 
@@ -336,7 +312,7 @@ builder.Services.AddTransient<AlertasPage>();
 
 ---
 
-### Para Persona 3 (Navegación):
+### (Navegación):
 
 **Configurar AppShell.xaml:**
 

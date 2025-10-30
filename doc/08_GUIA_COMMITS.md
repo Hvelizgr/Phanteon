@@ -465,7 +465,7 @@ Incluye corrección de bug de serialización JSON."
 
 ## 📊 Commits por Milestone
 
-### Milestone 1: ViewModels (Persona 1)
+### Milestone 1: ViewModels 
 ```bash
 1. feat(ViewModels): Crear LoginViewModel base
 2. feat(ViewModels): Agregar validaciones en LoginViewModel
@@ -479,8 +479,7 @@ Incluye corrección de bug de serialización JSON."
 10. chore(Config): Registrar DetalleDispositivoViewModel en DI
 ```
 
-### Milestone 2: Páginas XAML (Persona 2)
-```bash
+### Milestone 2: Páginas XAML 
 1. feat(Views): Crear LoginPage con formulario
 2. style(Views): Mejorar diseño de LoginPage
 3. chore(Config): Registrar LoginPage en DI

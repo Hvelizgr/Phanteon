@@ -512,40 +512,6 @@ private async Task CargarDatos()
 
 ---
 
-## 📋 Checklist de Debugging
-
-Cuando algo no funciona, revisar en este orden:
-
-1. **Backend:**
-   - [ ] El backend está corriendo (`dotnet run`)
-   - [ ] La BD existe y tiene datos
-   - [ ] El endpoint responde (probar en navegador)
-
-2. **Configuración:**
-   - [ ] URL correcta en `ApiConfiguration.cs`
-   - [ ] Servicios registrados en `MauiProgram.cs`
-   - [ ] ViewModels/Pages registrados
-
-3. **ViewModel:**
-   - [ ] Clase es `partial`
-   - [ ] Hereda de `ObservableObject`
-   - [ ] Usings correctos (Mvvm.ComponentModel, Mvvm.Input)
-   - [ ] Propiedades son `[ObservableProperty]`
-   - [ ] Comandos son `[RelayCommand]`
-
-4. **Página:**
-   - [ ] `BindingContext` asignado
-   - [ ] Nombres de bindings correctos
-   - [ ] `x:DataType` configurado
-   - [ ] Página registrada en `MauiProgram.cs`
-
-5. **Navegación:**
-   - [ ] Rutas registradas en `AppShell.xaml.cs`
-   - [ ] `QueryProperty` con nombres correctos
-   - [ ] Parámetros en la URL
-
----
-
 ## 🛠️ Herramientas de Debugging
 
 ### Ver logs en tiempo real:
@@ -577,19 +543,3 @@ https://localhost:7026/api/dispositivos/getall
 ```
 
 ---
-
-## 📞 Soporte
-
-Si encuentras un error no documentado aquí:
-
-1. Revisa los logs en Visual Studio (Output → Debug)
-2. Verifica la documentación relacionada:
-   - [01_QUICK_START.md](01_QUICK_START.md)
-   - [02_CONFIGURACION_BACKEND.md](02_CONFIGURACION_BACKEND.md)
-   - [04_ENDPOINTS_DISPONIBLES.md](04_ENDPOINTS_DISPONIBLES.md)
-3. Contacta a Héctor (000108304)
-
----
-
-_Actualizado: 29/10/2024_
-_Autor: Héctor Eduardo Véliz Girón_
