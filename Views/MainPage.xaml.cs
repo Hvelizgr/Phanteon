@@ -20,5 +20,16 @@
 
             SemanticScreenReader.Announce(CounterBtn.Text);
         }
+
+        private async void OnDiagnosticoClicked(object? sender, EventArgs e)
+        {
+            // Obtener la página de diagnóstico desde el contenedor de DI
+            var diagnosticoPage = Application.Current?.Handler?.MauiContext?.Services.GetService<DiagnosticoPage>();
+
+            if (diagnosticoPage != null)
+            {
+                await Navigation.PushAsync(diagnosticoPage);
+            }
+        }
     }
 }
