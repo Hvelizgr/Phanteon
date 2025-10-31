@@ -162,7 +162,9 @@ var ultimos10 = recientes.OrderByDescending(d => d.Registro).Take(10).ToList();
 
 ---
 
-## 🔴 ERRORES DE BASE DE DATOS
+## 🔴 ERRORES DE BASE DE DATOS (BACKEND)
+
+**⚠️ IMPORTANTE:** Estos errores ocurren en el **backend (DevicesAPI)**, que es un repositorio externo.
 
 ### ❌ Error: "Unable to connect to database" en el backend
 
@@ -173,76 +175,43 @@ Cannot open database "DevicesDB"
 Login failed for user
 ```
 
-**Soluciones:**
+**Causa:** Problema de configuración del backend (DevicesAPI), **no de Phanteon**.
 
-#### Solución 1: Verificar que SQL Server esté corriendo
+**Solución:**
 
-**Windows:**
-1. Win + R → `services.msc`
-2. Buscar "SQL Server (MSSQLSERVER)"
-3. Estado debe ser "Running"
-4. Si no está corriendo: Click derecho → Start
+Este error es del lado del backend. Verifica:
 
-#### Solución 2: Verificar cadena de conexión
+1. **SQL Server está corriendo:**
+   - Windows: Services → SQL Server (MSSQLSERVER) → Running
 
-Editar `DevicesAPI/appsettings.Development.json`:
+2. **La configuración del backend está correcta:**
+   - Esto debe resolverlo el propietario del backend (@epinto17)
+   - El archivo `appsettings.Development.json` tiene la cadena de conexión correcta
 
-**Opción A - Windows Authentication:**
-```json
-{
-  "ConnectionStrings": {
-    "AZURE_SQL_CONNECTIONSTRING": "Server=localhost;Database=DevicesDB;Trusted_Connection=True;TrustServerCertificate=True;"
-  }
-}
-```
-
-**Opción B - SQL Server Express:**
-```json
-{
-  "ConnectionStrings": {
-    "AZURE_SQL_CONNECTIONSTRING": "Server=localhost\\SQLEXPRESS;Database=DevicesDB;Trusted_Connection=True;TrustServerCertificate=True;"
-  }
-}
-```
-
-**Opción C - Usuario/Contraseña:**
-```json
-{
-  "ConnectionStrings": {
-    "AZURE_SQL_CONNECTIONSTRING": "Server=localhost;Database=DevicesDB;User Id=sa;Password=TuPassword123;TrustServerCertificate=True;"
-  }
-}
-```
-
-#### Solución 3: Crear la base de datos
-
+3. **Si tienes acceso al repositorio del backend:**
 ```bash
 cd DevicesAPI
 dotnet ef database update
 ```
+
+**Si el problema persiste:** Contactar a **Erick Pinto (@epinto17)**, propietario del backend.
 
 ---
 
 ### ❌ Error: "No such table" o "Invalid object name"
 
-**Causa:**
-Las migraciones no se aplicaron correctamente.
+**Causa:** Las migraciones del backend no están aplicadas.
 
 **Solución:**
 
+Este es un problema del backend. Si tienes acceso al repositorio:
+
 ```bash
 cd DevicesAPI
-
-# Ver migraciones disponibles
-dotnet ef migrations list
-
-# Aplicar migraciones
-dotnet ef database update
-
-# Si hay problemas, eliminar BD y recrear
-dotnet ef database drop
 dotnet ef database update
 ```
+
+**Si no tienes permisos:** Contactar a @epinto17.
 
 ---
 
@@ -278,7 +247,7 @@ builder.Services.AddTransient<TuPage>();
 
 ---
 
-### ❌ Error: "Port 7026 already in use"
+### ❌ Error: "Port 7026 already in use" (Backend)
 
 **Síntomas:**
 ```
@@ -286,12 +255,11 @@ IOException: Failed to bind to address https://127.0.0.1:7026
 EADDRINUSE: address already in use
 ```
 
-**Causa:**
-Otra instancia del backend está corriendo o el puerto está ocupado.
+**Causa:** Otra instancia del backend está corriendo o el puerto está ocupado.
 
 **Soluciones:**
 
-#### Solución 1: Cerrar instancia anterior
+#### Solución 1: Cerrar instancia anterior del backend
 
 ```bash
 # Windows
@@ -301,24 +269,16 @@ taskkill /F /IM dotnet.exe
 killall dotnet
 ```
 
-#### Solución 2: Cambiar puerto
+#### Solución 2: Cambiar el puerto (requiere acceso al backend)
 
-Editar `DevicesAPI/Properties/launchSettings.json`:
+Si tienes acceso al repositorio del backend, editar `DevicesAPI/Properties/launchSettings.json` y cambiar el puerto.
 
-```json
-{
-  "profiles": {
-    "https": {
-      "applicationUrl": "https://localhost:7027;http://localhost:5001"
-    }
-  }
-}
-```
-
-Y actualizar en Phanteon (`ApiConfiguration.cs`):
+Luego actualizar en Phanteon (`Helpers/ApiConfiguration.cs`):
 ```csharp
-public static string BaseUrl { get; set; } = "https://10.0.2.2:7027";
+public static string BaseUrl { get; set; } = "https://10.0.2.2:NUEVO_PUERTO";
 ```
+
+**Si no tienes acceso:** Solicitar a @epinto17 que cambie el puerto del backend.
 
 ---
 

@@ -1,0 +1,682 @@
+{
+	"info": {
+		"_postman_id": "devices-api-collection-2025",
+		"name": "DevicesAPI - Complete Test Suite",
+		"description": "Colección completa de pruebas automatizadas para DevicesAPI con tests de validación para todos los endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Dispositivos",
+			"item": [
+				{
+					"name": "GET - Obtener Todos los Dispositivos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar que la respuesta sea exitosa",
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Verificar que la respuesta sea un array",
+									"pm.test(\"La respuesta es un array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});",
+									"",
+									"// Verificar tiempo de respuesta",
+									"pm.test(\"Tiempo de respuesta menor a 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"// Si hay dispositivos, guardar el primer ID para otras pruebas",
+									"if (pm.response.json().length > 0) {",
+									"    var firstDevice = pm.response.json()[0];",
+									"    pm.environment.set(\"dispositivo_id\", firstDevice.idDispositivo);",
+									"    ",
+									"    pm.test(\"Los dispositivos tienen la estructura correcta\", function () {",
+									"        pm.expect(firstDevice).to.have.property('idDispositivo');",
+									"        pm.expect(firstDevice).to.have.property('serialDispositivo');",
+									"        pm.expect(firstDevice).to.have.property('mac');",
+									"        pm.expect(firstDevice).to.have.property('firmware');",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/dispositivos/getall",
+							"host": ["{{base_url}}"],
+							"path": ["api", "dispositivos", "getall"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Obtener Dispositivo por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar código de respuesta",
+									"pm.test(\"Status code es 200 o 404\", function () {",
+									"    pm.expect([200, 404]).to.include(pm.response.code);",
+									"});",
+									"",
+									"// Si es exitoso, validar estructura",
+									"if (pm.response.code === 200) {",
+									"    pm.test(\"El dispositivo tiene la estructura correcta\", function () {",
+									"        var jsonData = pm.response.json();",
+									"        pm.expect(jsonData).to.have.property('idDispositivo');",
+									"        pm.expect(jsonData).to.have.property('serialDispositivo');",
+									"        pm.expect(jsonData).to.have.property('mac');",
+									"        pm.expect(jsonData).to.have.property('firmware');",
+									"        pm.expect(jsonData).to.have.property('direccion');",
+									"        pm.expect(jsonData).to.have.property('latitud');",
+									"        pm.expect(jsonData).to.have.property('longitud');",
+									"    });",
+									"    ",
+									"    pm.test(\"El ID coincide con el solicitado\", function () {",
+									"        var jsonData = pm.response.json();",
+									"        pm.expect(jsonData.idDispositivo).to.eql(parseInt(pm.environment.get(\"dispositivo_id\")));",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/dispositivos/getbyid/{{dispositivo_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "dispositivos", "getbyid", "{{dispositivo_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear Nuevo Dispositivo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar que se creó exitosamente",
+									"pm.test(\"Status code es 200 o 201\", function () {",
+									"    pm.expect([200, 201]).to.include(pm.response.code);",
+									"});",
+									"",
+									"// Verificar que se devuelve el dispositivo creado",
+									"pm.test(\"Se devuelve el dispositivo creado\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"    pm.expect(jsonData).to.have.property('idDispositivo');",
+									"});",
+									"",
+									"// Guardar el ID del dispositivo creado",
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"    var newDevice = pm.response.json();",
+									"    pm.environment.set(\"nuevo_dispositivo_id\", newDevice.idDispositivo);",
+									"    ",
+									"    pm.test(\"Los datos del dispositivo son correctos\", function () {",
+									"        pm.expect(newDevice.serialDispositivo).to.include('TEST');",
+									"        pm.expect(newDevice.activo).to.exist;",
+									"    });",
+									"}",
+									"",
+									"pm.test(\"Tiempo de respuesta aceptable\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"serialDispositivo\": \"TEST-{{$randomInt}}\",\n  \"mac\": \"{{$randomMACAddress}}\",\n  \"firmware\": \"v2.0.{{$randomInt}}\",\n  \"direccion\": \"{{$randomStreetAddress}}\",\n  \"latitud\": 14.5995,\n  \"longitud\": -90.5187,\n  \"activo\": \"true\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/dispositivos/post",
+							"host": ["{{base_url}}"],
+							"path": ["api", "dispositivos", "post"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "GET - Obtener Todos los Usuarios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"La respuesta es un array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Tiempo de respuesta aceptable\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"// Guardar primer usuario si existe",
+									"if (pm.response.json().length > 0) {",
+									"    var firstUser = pm.response.json()[0];",
+									"    pm.environment.set(\"usuario_id\", firstUser.idUsuario);",
+									"    ",
+									"    pm.test(\"Los usuarios tienen estructura correcta\", function () {",
+									"        pm.expect(firstUser).to.have.property('idUsuario');",
+									"        pm.expect(firstUser).to.have.property('nombreUsuario');",
+									"        pm.expect(firstUser).to.have.property('correo');",
+									"        pm.expect(firstUser).to.have.property('rol');",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/usuarios/getall",
+							"host": ["{{base_url}}"],
+							"path": ["api", "usuarios", "getall"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Obtener Usuario por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 o 404\", function () {",
+									"    pm.expect([200, 404]).to.include(pm.response.code);",
+									"});",
+									"",
+									"if (pm.response.code === 200) {",
+									"    pm.test(\"El usuario tiene la estructura correcta\", function () {",
+									"        var jsonData = pm.response.json();",
+									"        pm.expect(jsonData).to.have.property('idUsuario');",
+									"        pm.expect(jsonData).to.have.property('nombreUsuario');",
+									"        pm.expect(jsonData).to.have.property('correo');",
+									"        pm.expect(jsonData).to.have.property('passwordHash');",
+									"        pm.expect(jsonData).to.have.property('rol');",
+									"    });",
+									"    ",
+									"    pm.test(\"El correo tiene formato válido\", function () {",
+									"        var jsonData = pm.response.json();",
+									"        pm.expect(jsonData.correo).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/usuarios/getbyid/{{usuario_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "usuarios", "getbyid", "{{usuario_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear Nuevo Usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 o 201\", function () {",
+									"    pm.expect([200, 201]).to.include(pm.response.code);",
+									"});",
+									"",
+									"pm.test(\"Se devuelve el usuario creado\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"    pm.expect(jsonData).to.have.property('idUsuario');",
+									"});",
+									"",
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"    var newUser = pm.response.json();",
+									"    pm.environment.set(\"nuevo_usuario_id\", newUser.idUsuario);",
+									"    ",
+									"    pm.test(\"El usuario creado tiene los datos correctos\", function () {",
+									"        pm.expect(newUser.nombreUsuario).to.exist;",
+									"        pm.expect(newUser.correo).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+									"        pm.expect(newUser.rol).to.exist;",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombreUsuario\": \"usuario_test_{{$randomInt}}\",\n  \"correo\": \"test{{$randomInt}}@example.com\",\n  \"passwordHash\": \"{{$randomPassword}}\",\n  \"rol\": \"Usuario\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/usuarios/post",
+							"host": ["{{base_url}}"],
+							"path": ["api", "usuarios", "post"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alertas",
+			"item": [
+				{
+					"name": "GET - Obtener Todas las Alertas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"La respuesta es un array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Tiempo de respuesta aceptable\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"if (pm.response.json().length > 0) {",
+									"    var firstAlert = pm.response.json()[0];",
+									"    pm.environment.set(\"alerta_id\", firstAlert.idAlert);",
+									"    ",
+									"    pm.test(\"Las alertas tienen estructura correcta\", function () {",
+									"        pm.expect(firstAlert).to.have.property('idAlert');",
+									"        pm.expect(firstAlert).to.have.property('tipoEvento');",
+									"        pm.expect(firstAlert).to.have.property('severidad');",
+									"        pm.expect(firstAlert).to.have.property('procesado');",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/alertas/getall",
+							"host": ["{{base_url}}"],
+							"path": ["api", "alertas", "getall"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Obtener Alerta por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 o 404\", function () {",
+									"    pm.expect([200, 404]).to.include(pm.response.code);",
+									"});",
+									"",
+									"if (pm.response.code === 200) {",
+									"    pm.test(\"La alerta tiene la estructura correcta\", function () {",
+									"        var jsonData = pm.response.json();",
+									"        pm.expect(jsonData).to.have.property('idAlert');",
+									"        pm.expect(jsonData).to.have.property('tipoEvento');",
+									"        pm.expect(jsonData).to.have.property('marcaTiempo');",
+									"        pm.expect(jsonData).to.have.property('procesado');",
+									"        pm.expect(jsonData).to.have.property('severidad');",
+									"        pm.expect(jsonData).to.have.property('idDispositivo');",
+									"    });",
+									"    ",
+									"    pm.test(\"Procesado es un booleano\", function () {",
+									"        var jsonData = pm.response.json();",
+									"        pm.expect(jsonData.procesado).to.be.a('boolean');",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/alertas/getbyid/{{alerta_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "alertas", "getbyid", "{{alerta_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear Nueva Alerta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 o 201\", function () {",
+									"    pm.expect([200, 201]).to.include(pm.response.code);",
+									"});",
+									"",
+									"pm.test(\"Se devuelve la alerta creada\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"    pm.expect(jsonData).to.have.property('idAlert');",
+									"});",
+									"",
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"    var newAlert = pm.response.json();",
+									"    pm.environment.set(\"nueva_alerta_id\", newAlert.idAlert);",
+									"    ",
+									"    pm.test(\"La alerta tiene los datos correctos\", function () {",
+									"        pm.expect(newAlert.tipoEvento).to.exist;",
+									"        pm.expect(newAlert.severidad).to.exist;",
+									"        pm.expect(newAlert.procesado).to.be.a('boolean');",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tipoEvento\": \"Movimiento Detectado\",\n  \"severidad\": \"Media\",\n  \"procesado\": false,\n  \"cargaUtil\": \"{\\\"sensor\\\": \\\"motion\\\", \\\"value\\\": true}\",\n  \"idDispositivo\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/alertas/post",
+							"host": ["{{base_url}}"],
+							"path": ["api", "alertas", "post"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Historial Dispositivos",
+			"item": [
+				{
+					"name": "GET - Obtener Todo el Historial",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"La respuesta es un array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Tiempo de respuesta aceptable\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"if (pm.response.json().length > 0) {",
+									"    var firstHistory = pm.response.json()[0];",
+									"    pm.environment.set(\"historial_id\", firstHistory.idHistorialDispositivo);",
+									"    ",
+									"    pm.test(\"Los registros de historial tienen estructura correcta\", function () {",
+									"        pm.expect(firstHistory).to.have.property('idHistorialDispositivo');",
+									"        pm.expect(firstHistory).to.have.property('marcaTiempo');",
+									"        pm.expect(firstHistory).to.have.property('valorProximidad');",
+									"        pm.expect(firstHistory).to.have.property('movimientoDetectado');",
+									"        pm.expect(firstHistory).to.have.property('estado');",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/historialdispositivos/getall",
+							"host": ["{{base_url}}"],
+							"path": ["api", "historialdispositivos", "getall"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Obtener Historial por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 o 404\", function () {",
+									"    pm.expect([200, 404]).to.include(pm.response.code);",
+									"});",
+									"",
+									"if (pm.response.code === 200) {",
+									"    pm.test(\"El historial tiene la estructura correcta\", function () {",
+									"        var jsonData = pm.response.json();",
+									"        pm.expect(jsonData).to.have.property('idHistorialDispositivo');",
+									"        pm.expect(jsonData).to.have.property('marcaTiempo');",
+									"        pm.expect(jsonData).to.have.property('valorProximidad');",
+									"        pm.expect(jsonData).to.have.property('movimientoDetectado');",
+									"        pm.expect(jsonData).to.have.property('estado');",
+									"        pm.expect(jsonData).to.have.property('idDispositivo');",
+									"    });",
+									"    ",
+									"    pm.test(\"Valores numéricos son correctos\", function () {",
+									"        var jsonData = pm.response.json();",
+									"        pm.expect(jsonData.valorProximidad).to.be.a('number');",
+									"        pm.expect(jsonData.movimientoDetectado).to.be.a('boolean');",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/historialdispositivos/getbyid/{{historial_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "historialdispositivos", "getbyid", "{{historial_id}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Crear Registro de Historial",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 o 201\", function () {",
+									"    pm.expect([200, 201]).to.include(pm.response.code);",
+									"});",
+									"",
+									"pm.test(\"Se devuelve el registro creado\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"    pm.expect(jsonData).to.have.property('idHistorialDispositivo');",
+									"});",
+									"",
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"    var newHistory = pm.response.json();",
+									"    pm.environment.set(\"nuevo_historial_id\", newHistory.idHistorialDispositivo);",
+									"    ",
+									"    pm.test(\"El historial tiene los valores correctos\", function () {",
+									"        pm.expect(newHistory.valorProximidad).to.be.a('number');",
+									"        pm.expect(newHistory.movimientoDetectado).to.be.a('boolean');",
+									"        pm.expect(newHistory.estado).to.exist;",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"valorProximidad\": {{$randomInt}},\n  \"movimientoDetectado\": true,\n  \"estado\": \"Activo\",\n  \"idDispositivo\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/historialdispositivos/post",
+							"host": ["{{base_url}}"],
+							"path": ["api", "historialdispositivos", "post"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Verificar API Disponible",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La API está disponible\", function () {",
+									"    pm.expect([200, 404]).to.include(pm.response.code);",
+									"});",
+									"",
+									"pm.test(\"Tiempo de respuesta es aceptable\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									"",
+									"console.log(\"API respondiendo en: \" + pm.response.responseTime + \"ms\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/dispositivos/getall",
+							"host": ["{{base_url}}"],
+							"path": ["api", "dispositivos", "getall"]
+						},
+						"description": "Prueba básica para verificar que la API está disponible y respondiendo"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Script que se ejecuta antes de cada request",
+					"console.log(\"Ejecutando request: \" + pm.info.requestName);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Script que se ejecuta después de cada request",
+					"console.log(\"Request completado: \" + pm.info.requestName);",
+					"console.log(\"Status: \" + pm.response.code);",
+					"console.log(\"Tiempo: \" + pm.response.responseTime + \"ms\");"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5094",
+			"type": "string"
+		}
+	]
+}

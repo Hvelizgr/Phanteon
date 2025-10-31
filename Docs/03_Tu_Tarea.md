@@ -6,14 +6,16 @@
 
 | Miembro | Código | Tareas Asignadas |
 |---------|--------|------------------|
-| **Héctor Eduardo Véliz Girón** | 000108304 | ✅ **YA COMPLETADAS** (Ver abajo) |
-| **Persona 1** | _________ | ViewModels Faltantes |
-| **Persona 2** | _________ | Páginas XAML Faltantes |
-| **Persona 3** | _________ | Navegación y Validaciones |
+| **Héctor Eduardo Véliz Girón** | 000108304 | ✅ **YA COMPLETADAS** (Ver abajo) + LoginPage con su ViewModel |
+| **Persona 1** | _________ | AlertasPage.xaml + AlertasViewModel.cs completos |
+| **Persona 2** | _________ | DetalleDispositivoPage.xaml + DetalleDispositivoViewModel.cs completos |
+| **Persona 3** | _________ | DispositivosPage.xaml (real) + DispositivosViewModel.cs (reemplazar el de prueba) + Navegación y Validaciones |
+
+**⚠️ ESTRATEGIA:** Cada persona crea su propia View (.xaml + .xaml.cs) junto con su ViewModel (.cs), para facilitar el trabajo en equipo y evitar conflictos. hare 1 adicional (Login) para completar 4 vistas.
 
 ---
 
-## ✅ TAREAS COMPLETADAS 
+## ✅ TAREAS COMPLETADAS (Héctor)
 
 ### 🏗️ Infraestructura del Proyecto
 
@@ -35,55 +37,28 @@
   - Polly (v8.6.4)
   - Polly.Extensions.Http (v3.0.0)
 
-### 📦 Modelos de Datos
+### 📡 Capa de Comunicación con API Externa
+
+**⚠️ NOTA IMPORTANTE:** La API es un **repositorio externo** (de @epinto17). Aquí solo se configuró el **consumo** desde Phanteon.
+
+**Ubicación de la API:** https://github.com/epinto17/DevicesAPI
+
+#### 📦 Modelos de Datos (sincronizados con la API)
 
 Ubicación: `Models/`
 
-- [x] **Usuario.cs**
-  ```csharp
-  - IdUsuario: int
-  - NombreUsuario: string
-  - Correo: string
-  - PasswordHash: string
-  - Rol: string
-  ```
+Estos modelos **reflejan** la estructura de datos de la API externa para poder consumirla.
 
-- [x] **Dispositivo.cs**
-  ```csharp
-  - IdDispositivo: int
-  - SerialDispositivo: string
-  - MAC: string
-  - Firmware: string
-  - Direccion: string
-  - Latitud: double
-  - Longitud: double
-  - Registro: DateTime
-  - Activo: string
-  - UltimaVista: DateTime
-  ```
+- [x] **Usuario.cs** - Modelo para autenticación y usuarios
+- [x] **Dispositivo.cs** - Modelo para dispositivos IoT
+- [x] **Alerta.cs** - Modelo para alertas del sistema
+- [x] **HistorialDispositivo.cs** - Modelo para eventos de dispositivos
 
-- [x] **Alerta.cs**
-  ```csharp
-  - IdAlerta: int
-  - IdDispositivo: int
-  - TipoAlerta: string
-  - Mensaje: string
-  - FechaHora: DateTime
-  - Estado: string
-  ```
-
-- [x] **HistorialDispositivo.cs**
-  ```csharp
-  - IdHistorial: int
-  - IdDispositivo: int
-  - Evento: string
-  - FechaHora: DateTime
-  - Detalles: string
-  ```
-
-### 🔌 Servicios de API (Refit)
+#### 🔌 Interfaces de Servicios (Refit)
 
 Ubicación: `Services/Interfaces/`
+
+Estas interfaces definen **cómo consumir** los endpoints de la API externa.
 
 - [x] **IDispositivosService.cs**
   - GetAllDispositivosAsync()
@@ -124,37 +99,26 @@ Ubicación: `Services/Interfaces/`
 
 Ubicación: `Helpers/`
 
-- [x] **InvertedBoolConverter.cs**
-  - Convierte true ↔ false
-  - Uso: Deshabilitar botones mientras carga
-
-- [x] **StringNotEmptyConverter.cs**
-  - Retorna true si string NO está vacío
-  - Uso: Mostrar mensajes de error condicionales
+- [x] **InvertedBoolConverter.cs** - Convierte true ↔ false (para bindings)
+- [x] **StringNotEmptyConverter.cs** - Verifica strings no vacíos
+- [x] **SecureStorageService.cs** - Servicio de almacenamiento seguro
 
 ### 🎨 ViewModels Iniciales
 
-- [x] **DispositivosViewModel.cs**
-  - Propiedades: Dispositivos (ObservableCollection), EstaCargando
-  - Comandos: CargarDispositivosCommand
-  - Consume: IDispositivosService
+- [x] **BaseViewModel.cs** - Clase base con lógica común
+- [x] **DiagnosticoViewModel.cs** - Dashboard con estadísticas
+- [x] **EjemploTesteoViewModel.cs** - Ejemplo de referencia completo
+- [x] **TestConexionApiViewModel.cs** - ViewModel de PRUEBA para verificar conexión con la API
 
-- [x] **DiagnosticoViewModel.cs**
-  - Propiedades: TotalDispositivos, DispositivosActivos, AlertasActivas, etc.
-  - Comandos: ActualizarDashboardCommand
-  - Consume: IDispositivosService, IAlertasService
+**⚠️ NOTA IMPORTANTE:**
+- **TestConexionApiViewModel.cs** se mantiene SOLO como HERRAMIENTA de PRUEBA para verificar la conexión con la API
+- NO es la implementación real de la funcionalidad de dispositivos
+- La implementación real de DispositivosViewModel debe ser creada desde cero por Persona 3
 
 ### 📱 Páginas Iniciales
 
-- [x] **DispositivosPage.xaml + .cs**
-  - Lista de dispositivos con CollectionView
-  - ActivityIndicator
-  - ToolbarItem para actualizar
-
-- [x] **DiagnosticoPage.xaml + .cs**
-  - Dashboard con estadísticas
-  - Tarjetas de resumen
-  - Botón actualizar
+- [x] **MainPage.xaml + .cs** - Página inicial
+- [x] **DiagnosticoPage.xaml + .cs** - Dashboard básico
 
 ---
 
@@ -162,20 +126,21 @@ Ubicación: `Helpers/`
 
 ---
 
-## ViewModels Faltantes
+## 👤 Persona: Héctor (Tarea Adicional)
 
-### Responsabilidades:
-Crear 3 ViewModels faltantes que implementen la lógica de presentación.
+### Responsabilidad:
+Crear LoginPage completo con su ViewModel para autenticación.
 
 ### Ubicación:
-`ViewModels/`
+- `ViewModels/LoginViewModel.cs`
+- `Views/LoginPage.xaml` + `LoginPage.xaml.cs`
 
 ---
 
-### Tarea 1.1: LoginViewModel.cs
+### Tarea: LoginPage + LoginViewModel
 
 **Descripción:**
-ViewModel para manejar el inicio de sesión de usuarios.
+Página de inicio de sesión con formulario y lógica de autenticación.
 
 **Propiedades requeridas:**
 ```csharp
@@ -218,14 +183,38 @@ private async Task IniciarSesion()
 Si login exitoso: `await Shell.Current.GoToAsync("///diagnostico");`
 
 **Archivo de referencia:**
-Ver `DispositivosViewModel.cs` como ejemplo
+Ver `EjemploTesteoViewModel.cs` como ejemplo completo
+
+**Componentes XAML requeridos (LoginPage.xaml):**
+```xml
+- Entry para Correo (binding a Correo)
+- Entry para Password (IsPassword="True", binding a Password)
+- Button "Iniciar Sesión" (Command={Binding IniciarSesionCommand})
+- Label para mensajes de error (binding a MensajeError)
+- ActivityIndicator (binding a EstaCargando)
+```
+
+**Converters a usar:**
+- `InvertedBoolConverter` - Deshabilitar botón mientras carga
+- `StringNotEmptyConverter` - Mostrar error solo si hay mensaje
 
 ---
 
-### Tarea 1.2: AlertasViewModel.cs
+## 👤 Persona 1
+
+### Responsabilidad:
+Crear AlertasPage completo con su ViewModel para listar y filtrar alertas.
+
+### Ubicación:
+- `ViewModels/AlertasViewModel.cs`
+- `Views/AlertasPage.xaml` + `AlertasPage.xaml.cs`
+
+---
+
+### Tarea: AlertasPage + AlertasViewModel
 
 **Descripción:**
-ViewModel para listar y filtrar alertas del sistema.
+Página de alertas con lista filtrable y lógica de negocio.
 
 **Propiedades requeridas:**
 ```csharp
@@ -267,12 +256,40 @@ private async Task FiltrarPorTipo(string tipo)
 - Filtrar por estado (Nueva, Leída, Resuelta)
 - Ordenar por fecha (más recientes primero)
 
+**Componentes XAML requeridos (AlertasPage.xaml):**
+```xml
+- ToolbarItem "Actualizar" (Command={Binding CargarAlertasCommand})
+- Picker o Botones para filtros (Todas, Crítica, Advertencia, Info)
+- CollectionView (ItemsSource={Binding AlertasFiltradas})
+- ItemTemplate con TipoAlerta, Mensaje, FechaHora, Estado
+- ActivityIndicator (binding a EstaCargando)
+```
+
+**Colores según tipo:**
+- Crítica: Rojo (#DC3545)
+- Advertencia: Amarillo (#FFC107)
+- Info: Azul (#0D6EFD)
+
+**Archivo de referencia:**
+Ver `EjemploTesteoViewModel.cs` como ejemplo
+
 ---
 
-### Tarea 1.3: DetalleDispositivoViewModel.cs
+## 👤 Persona 2
+
+### Responsabilidad:
+Crear DetalleDispositivoPage completo con su ViewModel para mostrar información detallada.
+
+### Ubicación:
+- `ViewModels/DetalleDispositivoViewModel.cs`
+- `Views/DetalleDispositivoPage.xaml` + `DetalleDispositivoPage.xaml.cs`
+
+---
+
+### Tarea: DetalleDispositivoPage + DetalleDispositivoViewModel
 
 **Descripción:**
-ViewModel para mostrar detalle completo de un dispositivo con su historial y alertas.
+Página de detalle de dispositivo con información completa, historial y alertas asociadas.
 
 **Propiedades requeridas:**
 ```csharp
@@ -323,9 +340,101 @@ public partial class DetalleDispositivoViewModel : ObservableObject
 }
 ```
 
+**Componentes XAML requeridos (DetalleDispositivoPage.xaml):**
+
+**Sección 1 - Información del Dispositivo:**
+```xml
+- SerialDispositivo, MAC, Firmware, Dirección
+- Estado Activo/Inactivo (Label con color)
+- Fecha de Registro, Última Vista
+- Latitud/Longitud
+```
+
+**Sección 2 - Historial:**
+```xml
+- CollectionView (ItemsSource={Binding Historial})
+- ItemTemplate con Evento, FechaHora, Detalles
+```
+
+**Sección 3 - Alertas Activas:**
+```xml
+- CollectionView (ItemsSource={Binding Alertas})
+- ItemTemplate con TipoAlerta (con color), Mensaje, FechaHora
+```
+
+**Layout sugerido:**
+- ScrollView con VerticalStackLayout
+- Frame para cada sección
+- ActivityIndicator
+- ToolbarItem "Actualizar"
+
+**Archivo de referencia:**
+Ver `EjemploTesteoViewModel.cs` como ejemplo
+
 ---
 
-### Checklist Persona 1:
+## 👤 Persona 3
+
+### Responsabilidad:
+Crear DispositivosPage y DispositivosViewModel COMPLETOS desde cero con funcionalidad real, más configurar navegación y validaciones para todo el proyecto.
+
+### Ubicación:
+- `ViewModels/DispositivosViewModel.cs` (CREAR desde cero)
+- `Views/DispositivosPage.xaml` + `DispositivosPage.xaml.cs` (CREAR desde cero)
+- `AppShell.xaml` + `AppShell.xaml.cs`
+- `App.xaml.cs`
+
+**⚠️ NOTA:** Existe un TestConexionApiViewModel.cs que es SOLO para pruebas de conexión. NO lo uses como base, créalo desde cero siguiendo el patrón de EjemploTesteoViewModel.cs
+
+---
+
+### Tarea 3.1: DispositivosPage + DispositivosViewModel (Implementación Real)
+
+**Descripción:**
+Crear una página completa que muestre:
+- Lista de dispositivos conectados
+- Detalles de cada dispositivo (Serial, MAC, Firmware, Estado)
+- Navegación al detalle completo del dispositivo
+- Búsqueda y filtrado de dispositivos
+- Actualización de la lista (pull-to-refresh)
+
+**Propiedades sugeridas:**
+```csharp
+[ObservableProperty]
+private ObservableCollection<Dispositivo> dispositivos = new();
+
+[ObservableProperty]
+private Dispositivo? dispositivoSeleccionado;
+
+[ObservableProperty]
+private bool estaCargando = false;
+
+[ObservableProperty]
+private string filtro = string.Empty; // Para búsqueda
+```
+
+**Comandos sugeridos:**
+```csharp
+[RelayCommand]
+private async Task CargarDispositivos();
+
+[RelayCommand]
+private async Task IrADetalle(int dispositivoId);
+
+[RelayCommand]
+private async Task BuscarDispositivos(string termino);
+```
+
+**Componentes XAML:**
+- SearchBar para filtrar dispositivos
+- CollectionView con lista de dispositivos
+- TapGestureRecognizer para navegar a detalle
+- RefreshView para actualizar
+- ActivityIndicator
+
+---
+
+### Checklist Persona: Héctor (Tarea adicional):
 
 - [ ] Crear LoginViewModel.cs
   - [ ] Propiedades con [ObservableProperty]
@@ -334,182 +443,7 @@ public partial class DetalleDispositivoViewModel : ObservableObject
   - [ ] Consumo de IUsuariosService
   - [ ] Navegación a dashboard
 
-- [ ] Crear AlertasViewModel.cs
-  - [ ] Propiedades para alertas y filtros
-  - [ ] Comando CargarAlertasCommand
-  - [ ] Comando FiltrarPorTipoCommand
-  - [ ] Consumo de IAlertasService
-  - [ ] Lógica de filtrado
-
-- [ ] Crear DetalleDispositivoViewModel.cs
-  - [ ] Propiedades para dispositivo, historial y alertas
-  - [ ] Comando CargarDetalleCommand
-  - [ ] QueryProperty para recibir ID
-  - [ ] Consumo de 3 servicios
-  - [ ] Manejo de errores
-
-- [ ] Registrar en MauiProgram.cs
-  - [ ] `builder.Services.AddTransient<LoginViewModel>();`
-  - [ ] `builder.Services.AddTransient<AlertasViewModel>();`
-  - [ ] `builder.Services.AddTransient<DetalleDispositivoViewModel>();`
-
----
-
-## 👤 Páginas XAML Faltantes
-
-### Responsabilidades:
-Crear 3 páginas XAML con sus code-behind que implementen las interfaces de usuario.
-
-### Ubicación:
-`Views/`
-
----
-
-### Tarea 2.1: LoginPage.xaml + LoginPage.xaml.cs
-
-**Descripción:**
-Pantalla de inicio de sesión con formulario.
-
-**Componentes XAML requeridos:**
-```xml
-- Entry para Correo (binding a Correo)
-- Entry para Password (IsPassword="True", binding a Password)
-- Button "Iniciar Sesión" (Command={Binding IniciarSesionCommand})
-- Label para mensajes de error (binding a MensajeError)
-- ActivityIndicator (binding a EstaCargando)
-```
-
-**Layout sugerido:**
-```
-- VerticalStackLayout centrado
-- Logo o título de la app
-- Entry de correo
-- Entry de password
-- Mensaje de error (condicional)
-- Botón de login
-- Indicador de carga
-```
-
-**Code-behind:**
-```csharp
-public partial class LoginPage : ContentPage
-{
-    private readonly LoginViewModel _viewModel;
-
-    public LoginPage(LoginViewModel viewModel)
-    {
-        InitializeComponent();
-        _viewModel = viewModel;
-        BindingContext = _viewModel;
-    }
-}
-```
-
-**Converters a usar:**
-- `InvertedBoolConverter` - Deshabilitar botón mientras carga
-- `StringNotEmptyConverter` - Mostrar error solo si hay mensaje
-
----
-
-### Tarea 2.2: AlertasPage.xaml + AlertasPage.xaml.cs
-
-**Descripción:**
-Lista de alertas con filtros por tipo.
-
-**Componentes XAML requeridos:**
-```xml
-- ToolbarItem "Actualizar" (Command={Binding CargarAlertasCommand})
-- Picker o Botones para filtros (Todas, Crítica, Advertencia, Info)
-- CollectionView (ItemsSource={Binding AlertasFiltradas})
-- ItemTemplate con:
-  - TipoAlerta (con color según tipo)
-  - Mensaje
-  - FechaHora
-  - Estado
-- ActivityIndicator (binding a EstaCargando)
-```
-
-**Colores según tipo:**
-- Crítica: Rojo (#DC3545)
-- Advertencia: Amarillo (#FFC107)
-- Info: Azul (#0D6EFD)
-
-**Code-behind:**
-```csharp
-public partial class AlertasPage : ContentPage
-{
-    private readonly AlertasViewModel _viewModel;
-
-    public AlertasPage(AlertasViewModel viewModel)
-    {
-        InitializeComponent();
-        _viewModel = viewModel;
-        BindingContext = _viewModel;
-    }
-
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        await _viewModel.CargarAlertasCommand.ExecuteAsync(null);
-    }
-}
-```
-
-**Archivo de referencia:**
-Ver `DispositivosPage.xaml` como ejemplo
-
----
-
-### Tarea 2.3: DetalleDispositivoPage.xaml + DetalleDispositivoPage.xaml.cs
-
-**Descripción:**
-Página de detalle de un dispositivo específico con su información, historial y alertas.
-
-**Componentes XAML requeridos:**
-
-**Sección 1 - Información del Dispositivo:**
-```xml
-- SerialDispositivo (Label, negrita)
-- MAC (Label)
-- Firmware (Label)
-- Dirección (Label)
-- Estado Activo/Inactivo (Label con color)
-- Fecha de Registro (Label)
-- Última Vista (Label)
-- Latitud/Longitud (Labels)
-```
-
-**Sección 2 - Historial:**
-```xml
-- CollectionView (ItemsSource={Binding Historial})
-- ItemTemplate con:
-  - Evento
-  - FechaHora
-  - Detalles
-```
-
-**Sección 3 - Alertas Activas:**
-```xml
-- CollectionView (ItemsSource={Binding Alertas})
-- ItemTemplate con:
-  - TipoAlerta (con color)
-  - Mensaje
-  - FechaHora
-```
-
-**Layout sugerido:**
-- ScrollView con VerticalStackLayout
-- Frame para información general
-- Frame para historial
-- Frame para alertas
-- ActivityIndicator
-- ToolbarItem "Actualizar"
-
----
-
-### Checklist:
-
-- [x] Crear LoginPage.xaml
+- [ ] Crear LoginPage.xaml + LoginPage.xaml.cs
   - [ ] Entry de correo
   - [ ] Entry de password
   - [ ] Button iniciar sesión
@@ -517,50 +451,89 @@ Página de detalle de un dispositivo específico con su información, historial 
   - [ ] ActivityIndicator
   - [ ] Bindings correctos
 
-- [ ] Crear LoginPage.xaml.cs
-  - [ ] Constructor con inyección de ViewModel
-  - [ ] Asignar BindingContext
+- [ ] Registrar en MauiProgram.cs
+  - [ ] `builder.Services.AddTransient<LoginViewModel>();`
+  - [ ] `builder.Services.AddTransient<LoginPage>();`
 
-- [ ] Crear AlertasPage.xaml
+---
+
+### Checklist Persona 1:
+
+- [ ] Crear AlertasViewModel.cs
+  - [ ] Propiedades para alertas y filtros
+  - [ ] Comando CargarAlertasCommand
+  - [ ] Comando FiltrarPorTipoCommand
+  - [ ] Consumo de IAlertasService
+  - [ ] Lógica de filtrado
+
+- [ ] Crear AlertasPage.xaml + AlertasPage.xaml.cs
   - [ ] ToolbarItem actualizar
   - [ ] Filtros por tipo
-  - [x] CollectionView con alertas
+  - [ ] CollectionView con alertas
   - [ ] ItemTemplate con colores
   - [ ] ActivityIndicator
-
-- [ ] Crear AlertasPage.xaml.cs
-  - [ ] Constructor con inyección
-  - [ ] Override OnAppearing
-
-- [ ] Crear DetalleDispositivoPage.xaml
-  - [ ] Sección de información
-  - [ ] Sección de historial
-  - [ ] Sección de alertas
-  - [ ] ScrollView
-  - [ ] ActivityIndicator
-
-- [ ] Crear DetalleDispositivoPage.xaml.cs
-  - [ ] Constructor con inyección
-  - [ ] Override OnAppearing
+  - [ ] Override OnAppearing en code-behind
 
 - [ ] Registrar en MauiProgram.cs
-  - [ ] `builder.Services.AddTransient<LoginPage>();`
+  - [ ] `builder.Services.AddTransient<AlertasViewModel>();`
   - [ ] `builder.Services.AddTransient<AlertasPage>();`
+
+---
+
+### Checklist Persona 2:
+
+- [ ] Crear DetalleDispositivoViewModel.cs
+  - [ ] Propiedades para dispositivo, historial y alertas
+  - [ ] Comando CargarDetalleCommand
+  - [ ] QueryProperty para recibir ID
+  - [ ] Consumo de 3 servicios (Dispositivos, Historial, Alertas)
+  - [ ] Manejo de errores
+
+- [ ] Crear DetalleDispositivoPage.xaml + DetalleDispositivoPage.xaml.cs
+  - [ ] Sección de información del dispositivo
+  - [ ] Sección de historial
+  - [ ] Sección de alertas activas
+  - [ ] ScrollView completo
+  - [ ] ActivityIndicator
+  - [ ] ToolbarItem "Actualizar"
+  - [ ] Override OnAppearing en code-behind
+
+- [ ] Registrar en MauiProgram.cs
+  - [ ] `builder.Services.AddTransient<DetalleDispositivoViewModel>();`
   - [ ] `builder.Services.AddTransient<DetalleDispositivoPage>();`
 
 ---
 
-## 👤  Navegación y Validaciones
+### Checklist Persona 3:
 
-### Responsabilidades:
-Configurar el sistema de navegación completo y agregar validaciones en todos los ViewModels.
+- [ ] CREAR DispositivosViewModel.cs desde cero
+  - [ ] Propiedades con [ObservableProperty]
+  - [ ] Comando CargarDispositivosCommand
+  - [ ] Comando IrADetalleCommand
+  - [ ] Comando BuscarDispositivosCommand
+  - [ ] Consumo de IDispositivosService
+  - [ ] Lógica de búsqueda/filtrado
+  - [ ] Manejo de errores
+
+- [ ] CREAR DispositivosPage.xaml + DispositivosPage.xaml.cs desde cero
+  - [ ] SearchBar para filtrar dispositivos
+  - [ ] RefreshView con pull-to-refresh
+  - [ ] CollectionView con lista de dispositivos
+  - [ ] ItemTemplate mostrando: Serial, MAC, Estado, Firmware
+  - [ ] TapGestureRecognizer para navegar a detalle
+  - [ ] ActivityIndicator
+  - [ ] Override OnAppearing en code-behind
+
+- [ ] Registrar en MauiProgram.cs
+  - [ ] `builder.Services.AddTransient<DispositivosViewModel>();`
+  - [ ] `builder.Services.AddTransient<DispositivosPage>();`
 
 ---
 
-### Tarea 3.1: Configurar AppShell.xaml
+### Tarea 3.3: Configurar AppShell.xaml
 
 **Descripción:**
-Crear menú lateral (Flyout) con navegación a todas las páginas.
+Configurar menú lateral (Flyout) con navegación a todas las páginas.
 
 **Estructura requerida:**
 ```xml
@@ -602,7 +575,7 @@ Crear menú lateral (Flyout) con navegación a todas las páginas.
 
 ---
 
-### Tarea 3.2: Registrar Rutas en AppShell.xaml.cs
+### Tarea 3.4: Registrar Rutas en AppShell.xaml.cs
 
 **Descripción:**
 Registrar rutas para navegación programática.
@@ -625,7 +598,7 @@ public partial class AppShell : Shell
 
 ---
 
-### Tarea 3.3: Configurar Navegación Inicial
+### Tarea 3.5: Configurar Navegación Inicial
 
 **Descripción:**
 Configurar qué página se muestra al iniciar la app.
@@ -654,7 +627,7 @@ public partial class App : Application
 
 ---
 
-### Tarea 3.4: Agregar Validaciones en ViewModels
+### Tarea 3.6: Agregar Validaciones en ViewModels
 
 **Descripción:**
 Implementar validaciones completas en todos los ViewModels.
@@ -709,7 +682,7 @@ private async Task IniciarSesion()
 
 ---
 
-### Tarea 3.5: Implementar Manejo de Errores
+### Tarea 3.7: Implementar Manejo de Errores
 
 **Descripción:**
 Agregar try-catch y manejo de errores en todos los métodos async.
@@ -768,7 +741,7 @@ private async Task CargarDatos()
 
 ---
 
-### Tarea 3.6: Verificación de Conectividad
+### Tarea 3.8: Verificación de Conectividad
 
 **Descripción:**
 Agregar verificación de internet antes de llamadas API.
@@ -787,7 +760,7 @@ if (Connectivity.NetworkAccess != NetworkAccess.Internet)
 
 ---
 
-### Checklist:
+### Checklist Final Persona 3:
 
 - [ ] Configurar AppShell.xaml
   - [ ] FlyoutItem Dashboard

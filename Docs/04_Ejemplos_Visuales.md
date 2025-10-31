@@ -7,140 +7,19 @@
 
 ## 📑 Índice
 
-1. [Página 1: LoginPage](#página-1-loginpage)
-2. [Página 2: DispositivosPage](#página-2-dispositivospage-ya-implementada)
-3. [Página 3: AlertasPage](#página-3-alertaspage)
-4. [Página 4: DetalleDispositivoPage](#página-4-detalledispositivopage)
-5. [Página 5: DiagnosticoPage](#página-5-diagnosticopage-ya-implementada)
+**Orden según asignación de tareas:**
+
+1. [Página 1: AlertasPage (Persona 1)](#página-1-alertaspage-persona-1)
+2. [Página 2: DetalleDispositivoPage (Persona 2)](#página-2-detalledispositivopage-persona-2)
+3. [Página 3: DispositivosPage (Persona 3)](#página-3-dispositivospage-persona-3)
+4. [Página 4: LoginPage (Héctor - Adicional)](#página-4-loginpage-héctor---adicional)
+5. [DiagnosticoPage (Ya implementada)](#diagnosticopage-ya-implementada)
 6. [Estilos Comunes](#estilos-comunes)
 7. [Navegación entre Páginas](#navegación-entre-páginas)
 
 ---
 
-## Página 1: LoginPage
-
-### Mockup ASCII
-
-```
-┌──────────────────────────────────────────┐
-│                                          │
-│          [LOGO PHANTEON]                 │
-│     Sistema de Monitoreo IoT             │
-│                                          │
-│  ┌────────────────────────────────────┐  │
-│  │ Correo Electrónico                 │  │
-│  │ usuario@ejemplo.com                │  │
-│  └────────────────────────────────────┘  │
-│                                          │
-│  ┌────────────────────────────────────┐  │
-│  │ Contraseña                         │  │
-│  │ ••••••••                           │  │
-│  └────────────────────────────────────┘  │
-│                                          │
-│  [ ] Recordar mi sesión                  │
-│                                          │
-│  ┌────────────────────────────────────┐  │
-│  │       INICIAR SESIÓN               │  │
-│  └────────────────────────────────────┘  │
-│                                          │
-│       ¿Olvidaste tu contraseña?          │
-│                                          │
-│  [ActivityIndicator] Iniciando sesión... │
-│  [Label] Error: Credenciales inválidas   │
-│                                          │
-└──────────────────────────────────────────┘
-
-
-### Componentes UI
-
-- **Entry** para correo (Keyboard: Email)
-- **Entry** para contraseña (IsPassword: true)
-- **CheckBox** para "Recordar sesión"
-- **Button** para "Iniciar Sesión"
-- **Label** para errores
-- **ActivityIndicator** para loading
-
-```
-
-### Code-Behind (LoginPage.xaml.cs)
-
-```csharp
-using Phanteon.ViewModels;
-
-namespace Phanteon.Views;
-
-public partial class LoginPage : ContentPage
-{
-    public LoginPage(LoginViewModel viewModel)
-    {
-        InitializeComponent();
-        BindingContext = viewModel;
-    }
-}
-```
-
-### Propiedades del ViewModel Necesarias
-
-```csharp
-[ObservableProperty]
-private string correo = string.Empty;
-
-[ObservableProperty]
-private string password = string.Empty;
-
-[ObservableProperty]
-private bool recordarSesion;
-
-[ObservableProperty]
-private string correoError = string.Empty;
-
-[ObservableProperty]
-private string passwordError = string.Empty;
-
-[ObservableProperty]
-private bool hasCorreoError;
-
-[ObservableProperty]
-private bool hasPasswordError;
-
-[ObservableProperty]
-private string errorMessage = string.Empty;
-
-[ObservableProperty]
-private bool hasError;
-
-[ObservableProperty]
-private bool isBusy;
-
-[RelayCommand]
-private async Task Login() { }
-
-[RelayCommand]
-private async Task OlvidoPassword() { }
-```
-
-### Endpoints Usados
-
-- `POST /api/usuarios/login` (debes agregarlo al backend)
-- `GET /api/usuarios/getbyid/{id}`
-
----
-
-## DispositivosPage
-
-Esta página ya fue implementada por Héctor. Revisa el archivo `Views/DispositivosPage.xaml` como referencia.
-
-### Características
-
-- CollectionView con lista de dispositivos
-- RefreshView para pull-to-refresh
-- Estado vacío cuando no hay dispositivos
-- Indicador de carga
-- Navegación a DetalleDispositivoPage
-
----
-
-## Página 3: AlertasPage
+## Página 1: AlertasPage (Persona 1)
 
 ### Mockup ASCII
 
@@ -213,7 +92,16 @@ private async Task Refresh() { }
 
 ---
 
-## Página 4: DetalleDispositivoPage
+**⚠️ NOTA:** Las páginas en este documento están ordenadas según la asignación de tareas del equipo:
+- Persona 1: AlertasPage
+- Persona 2: DetalleDispositivoPage
+- Persona 3: DispositivosPage
+- Héctor: LoginPage (adicional)
+
+Por favor salta a la sección que te corresponde.
+
+---
+## Página 2: DetalleDispositivoPage (Persona 2)
 
 ### Mockup ASCII
 
@@ -328,7 +216,288 @@ private async Task Eliminar() { }
 
 ---
 
-##  DiagnosticoPage 
+
+
+
+## Página 3: DispositivosPage (Persona 3)
+
+**⚠️ IMPORTANTE:** Esta página debe ser creada desde CERO por Persona 3. Existe un `TestConexionApiViewModel.cs` que es SOLO para pruebas de conexión, NO debe ser usado como base.
+
+### Mockup ASCII
+
+```
+┌──────────────────────────────────────────┐
+│  ☰ Dispositivos             [🔔] [⚙️]   │
+├──────────────────────────────────────────┤
+│                                          │
+│  ┌────────────────────────────────────┐  │
+│  │ 🔍 Buscar dispositivo...           │  │
+│  └────────────────────────────────────┘  │
+│                                          │
+│  [Activos: 12] [Inactivos: 3] [Total: 15]│
+│                                          │
+│  ┌────────────────────────────────────┐  │
+│  │ 🟢 DEV-001                         │  │
+│  │ MAC: 00:1A:2B:3C:4D:5E            │  │
+│  │ Estado: Activo • v2.1.5           │  │
+│  │ Última vista: Hace 2 min      [→] │  │
+│  └────────────────────────────────────┘  │
+│                                          │
+│  ┌────────────────────────────────────┐  │
+│  │ 🟢 DEV-002                         │  │
+│  │ MAC: 00:1A:2B:3C:4D:5F            │  │
+│  │ Estado: Activo • v2.1.3           │  │
+│  │ Última vista: Hace 5 min      [→] │  │
+│  └────────────────────────────────────┘  │
+│                                          │
+│  ┌────────────────────────────────────┐  │
+│  │ 🔴 DEV-003                         │  │
+│  │ MAC: 00:1A:2B:3C:4D:60            │  │
+│  │ Estado: Inactivo • v2.0.8         │  │
+│  │ Última vista: Hace 2 horas    [→] │  │
+│  └────────────────────────────────────┘  │
+│                                          │
+│  [Pull to refresh]                       │
+│                                          │
+└──────────────────────────────────────────┘
+```
+
+### Componentes UI
+
+- **SearchBar** para filtrar dispositivos por serial o MAC
+- **HorizontalStackLayout** con estadísticas (Activos/Inactivos/Total)
+- **RefreshView** para pull-to-refresh
+- **CollectionView** con lista de dispositivos
+- **TapGestureRecognizer** para navegar al detalle
+- **ActivityIndicator** para loading
+- **Label** para estado vacío
+
+### Code-Behind (DispositivosPage.xaml.cs)
+
+```csharp
+using Phanteon.ViewModels;
+
+namespace Phanteon.Views;
+
+public partial class DispositivosPage : ContentPage
+{
+    public DispositivosPage(DispositivosViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is DispositivosViewModel vm)
+        {
+            await vm.CargarDispositivosCommand.ExecuteAsync(null);
+        }
+    }
+}
+```
+
+### Propiedades del ViewModel Necesarias
+
+```csharp
+[ObservableProperty]
+private ObservableCollection<Dispositivo> dispositivos = new();
+
+[ObservableProperty]
+private ObservableCollection<Dispositivo> dispositivosFiltrados = new();
+
+[ObservableProperty]
+private string textoBusqueda = string.Empty;
+
+[ObservableProperty]
+private bool estaCargando = false;
+
+[ObservableProperty]
+private int totalDispositivos;
+
+[ObservableProperty]
+private int dispositivosActivos;
+
+[ObservableProperty]
+private int dispositivosInactivos;
+
+[RelayCommand]
+private async Task CargarDispositivos()
+{
+    // GET /api/dispositivos/getall
+    // Actualizar estadísticas
+}
+
+[RelayCommand]
+private async Task BuscarDispositivos()
+{
+    // Filtrar por Serial o MAC
+}
+
+[RelayCommand]
+private async Task IrADetalle(int dispositivoId)
+{
+    await Shell.Current.GoToAsync($"detalleDispositivo?id={dispositivoId}");
+}
+```
+
+### Lógica de Filtrado
+
+```csharp
+partial void OnTextoBusquedaChanged(string value)
+{
+    if (string.IsNullOrWhiteSpace(value))
+    {
+        DispositivosFiltrados = new ObservableCollection<Dispositivo>(Dispositivos);
+    }
+    else
+    {
+        var filtrados = Dispositivos.Where(d =>
+            d.SerialDispositivo.Contains(value, StringComparison.OrdinalIgnoreCase) ||
+            d.MAC.Contains(value, StringComparison.OrdinalIgnoreCase)
+        ).ToList();
+
+        DispositivosFiltrados = new ObservableCollection<Dispositivo>(filtrados);
+    }
+}
+```
+
+### Cálculo de Estadísticas
+
+```csharp
+private void ActualizarEstadisticas()
+{
+    TotalDispositivos = Dispositivos.Count;
+    DispositivosActivos = Dispositivos.Count(d => d.Activo == "Activo");
+    DispositivosInactivos = Dispositivos.Count(d => d.Activo == "Inactivo");
+}
+```
+
+### Endpoints Usados
+
+- `GET /api/dispositivos/getall`
+
+### Navegación
+
+Al hacer tap en un dispositivo:
+```csharp
+await Shell.Current.GoToAsync($"detalleDispositivo?id={dispositivo.IdDispositivo}");
+```
+
+---
+
+---
+
+## Página 4: LoginPage (Héctor - Adicional)
+
+### Mockup ASCII
+
+```
+┌──────────────────────────────────────────┐
+│                                          │
+│          [LOGO PHANTEON]                 │
+│     Sistema de Monitoreo IoT             │
+│                                          │
+│  ┌────────────────────────────────────┐  │
+│  │ Correo Electrónico                 │  │
+│  │ usuario@ejemplo.com                │  │
+│  └────────────────────────────────────┘  │
+│                                          │
+│  ┌────────────────────────────────────┐  │
+│  │ Contraseña                         │  │
+│  │ ••••••••                           │  │
+│  └────────────────────────────────────┘  │
+│                                          │
+│  [ ] Recordar mi sesión                  │
+│                                          │
+│  ┌────────────────────────────────────┐  │
+│  │       INICIAR SESIÓN               │  │
+│  └────────────────────────────────────┘  │
+│                                          │
+│       ¿Olvidaste tu contraseña?          │
+│                                          │
+│  [ActivityIndicator] Iniciando sesión... │
+│  [Label] Error: Credenciales inválidas   │
+│                                          │
+└──────────────────────────────────────────┘
+```
+
+### Componentes UI
+
+- **Entry** para correo (Keyboard: Email)
+- **Entry** para contraseña (IsPassword: true)
+- **CheckBox** para "Recordar sesión"
+- **Button** para "Iniciar Sesión"
+- **Label** para errores
+- **ActivityIndicator** for loading
+
+### Code-Behind (LoginPage.xaml.cs)
+
+```csharp
+using Phanteon.ViewModels;
+
+namespace Phanteon.Views;
+
+public partial class LoginPage : ContentPage
+{
+    public LoginPage(LoginViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
+    }
+}
+```
+
+### Propiedades del ViewModel Necesarias
+
+```csharp
+[ObservableProperty]
+private string correo = string.Empty;
+
+[ObservableProperty]
+private string password = string.Empty;
+
+[ObservableProperty]
+private bool recordarSesion;
+
+[ObservableProperty]
+private string correoError = string.Empty;
+
+[ObservableProperty]
+private string passwordError = string.Empty;
+
+[ObservableProperty]
+private bool hasCorreoError;
+
+[ObservableProperty]
+private bool hasPasswordError;
+
+[ObservableProperty]
+private string errorMessage = string.Empty;
+
+[ObservableProperty]
+private bool hasError;
+
+[ObservableProperty]
+private bool isBusy;
+
+[RelayCommand]
+private async Task Login() { }
+
+[RelayCommand]
+private async Task OlvidoPassword() { }
+```
+
+### Endpoints Usados
+
+- `POST /api/usuarios/login` (debes agregarlo al backend)
+- `GET /api/usuarios/getbyid/{id}`
+
+---
+
+## DiagnosticoPage (Ya Implementada)
 
 Esta página ya fue implementada por Héctor. Revisa el archivo `Views/DiagnosticoPage.xaml` como referencia.
 
