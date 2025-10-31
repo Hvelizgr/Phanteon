@@ -81,7 +81,7 @@ El alcance indica QUÉ parte del proyecto se modificó:
 
 ## ✅ COMMITS SUGERIDOS PARA EL EQUIPO
 
-### 🔷 Commits Iniciales (Ya hechos por Héctor)
+### 🔷 Commits Iniciales (Ya hechos por Héctor) ✅
 
 ```bash
 # 1. Inicialización del proyecto
@@ -90,27 +90,29 @@ git commit -m "chore: Inicializar proyecto .NET MAUI Phanteon"
 # 2. Configuración de NuGet
 git commit -m "build: Agregar paquetes NuGet (Refit, Polly, CommunityToolkit)"
 
-# 3. Modelos
-git commit -m "feat(Models): Agregar modelos Usuario, Dispositivo, Alerta, HistorialDispositivo"
+# 3. Modelos (sincronizados con API externa)
+git commit -m "feat(Models): Agregar modelos para consumo de API externa (Usuario, Dispositivo, Alerta, HistorialDispositivo)"
 
-# 4. Servicios
-git commit -m "feat(Services): Configurar servicios de API con Refit"
+# 4. Interfaces de Servicios (Refit para consumir API)
+git commit -m "feat(Services): Configurar interfaces Refit para consumo de API externa de @epinto17"
 
-# 5. Configuración
-git commit -m "feat(Config): Configurar inyección de dependencias y manejo de SSL"
+# 5. Configuración de Inyección de Dependencias
+git commit -m "feat(Config): Configurar DI, HttpClient y consumo de API externa"
 
 # 6. Helpers
-git commit -m "feat(Helpers): Agregar ApiConfiguration y Converters"
+git commit -m "feat(Helpers): Agregar ApiConfiguration, Converters y SecureStorageService"
 
 # 7. ViewModels iniciales
-git commit -m "feat(ViewModels): Agregar DispositivosViewModel y DiagnosticoViewModel"
+git commit -m "feat(ViewModels): Agregar BaseViewModel, DispositivosViewModel y DiagnosticoViewModel"
 
 # 8. Páginas iniciales
-git commit -m "feat(Views): Agregar DispositivosPage y DiagnosticoPage"
+git commit -m "feat(Views): Agregar MainPage, DispositivosPage y DiagnosticoPage"
 
 # 9. Documentación
-git commit -m "docs: Agregar documentación completa del proyecto en /doc"
+git commit -m "docs: Agregar documentación completa del proyecto"
 ```
+
+**Nota:** Los commits del **backend (DevicesAPI)** están en un repositorio separado (https://github.com/epinto17/DevicesAPI). Phanteon solo consume la API, no modifica el backend.
 
 ---
 
@@ -406,7 +408,7 @@ de código en múltiples ViewModels."
 
 ### Ejemplo 4: Documentación
 ```bash
-git add doc/03_DIVISION_TAREAS.md
+git add Docs/TAREAS_EQUIPO.md
 git commit -m "docs: Actualizar checklist de tareas completadas
 
 Marcar LoginViewModel como completado y agregar

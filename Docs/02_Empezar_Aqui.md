@@ -11,71 +11,42 @@
 
 ---
 
-## 🚀 PASO 1: Configurar el Backend API (5 minutos)
+## 🚀 PASO 1: Configurar el Backend API (Repositorio Externo)
 
-### 1.1 Clonar el repositorio del backend
+**⚠️ IMPORTANTE:** La API es un repositorio separado, **NO es parte de Phanteon**.
+
+### Prerrequisitos:
+- Acceso autorizado al repositorio de @epinto17
+- .NET SDK instalado
+- SQL Server instalado y corriendo
+
+### Pasos:
+
+**1. Solicitar acceso al repositorio:**
+   - Contactar a **Pinto** (GitHub: @epinto17)
+   - Repositorio: https://github.com/epinto17/DevicesAPI
+   - **Esperar confirmación** antes de continuar
+
+**2. Clonar y ejecutar (una vez autorizado):**
 
 ```bash
-# En una carpeta FUERA del proyecto Phanteon
+# Clonar FUERA del proyecto Phanteon
 git clone https://github.com/epinto17/DevicesAPI.git
 cd DevicesAPI
-```
 
-### 1.2 Configurar SQL Server
-
-Abre `appsettings.Development.json` y configura tu conexión:
-
-
-```
-
-### 1.3 Crear la base de datos
-
-```bash
-# Instalar EF Core Tools (solo primera vez)
-dotnet tool install --global dotnet-ef
-
-# Crear la base de datos
-dotnet ef database update
-
-
-**Salida esperada:**
-```
-Build started...
-Build succeeded.
-Applying migration '20241001_InitialCreate'.
-Done.
-```
-
-### 1.4 Ejecutar el backend
-
-```bash
+# Ejecutar (la configuración ya viene lista)
 dotnet run
 ```
 
-**Salida esperada:**
-```
-info: Microsoft.Hosting.Lifetime[14]
-      Now listening on: https://localhost:7026
-      Now listening on: http://localhost:5000
-info: Microsoft.Hosting.Lifetime[0]
-      Application started. Press Ctrl+C to shut down.
-```
+**3. Verificar que funciona:**
 
-✅ **Deja esta terminal abierta. El backend debe estar corriendo siempre que trabajes.**
+Abre en el navegador: `https://localhost:7026/api/dispositivos/getall`
 
-### 1.5 Verificar que funciona
+✅ Si ves `[]` está funcionando correctamente.
 
-**Opción 1 - Navegador:**
-Abre: `https://localhost:7026/api/dispositivos/getall`
+**Nota:** La configuración del backend (SQL Server, migraciones, Entity Framework) ya viene lista en el repositorio. Solo necesitas ejecutar `dotnet run`. Ver `Postman/Guia POSTMAN.md` para probar los endpoints.
 
-**Opción 2 - CMD/PowerShell:**
-```bash
-curl https://localhost:7026/api/dispositivos/getall
-```
-
-Debes ver: `[]` (array vacío) o datos si hay dispositivos.
-
----
+___
 
 ## 💻 PASO 2: Abrir el Proyecto Phanteon
 
@@ -361,26 +332,23 @@ public partial class AppShell : Shell
 
 ## 🐛 Problemas Comunes
 
-### ❌ "Connection refused"
-**Solución:** Verifica que el backend esté corriendo (`dotnet run`)
+**Para una lista completa de errores y soluciones, ver [06_Solucion_Problemas.md](06_Solucion_Problemas.md)**
 
-### ❌ "SSL Certificate error"
-**Solución:** Ya está resuelto en el código con `ServerCertificateCustomValidationCallback` en modo DEBUG
+### ❌ "Connection refused"
+**Solución:** Verifica que el backend esté corriendo (`dotnet run` en DevicesAPI)
 
 ### ❌ "Cannot resolve service"
 **Solución:** Registra el ViewModel/Page en `MauiProgram.cs`
-
-### ❌ "Port 7026 already in use"
-**Solución:** Cambia el puerto en `Properties/launchSettings.json` del backend
 
 ---
 
 ## 📚 Documentos Relacionados
 
-- **[03_DIVISION_TAREAS.md](03_DIVISION_TAREAS.md)** - Tareas detalladas
-- **[04_ENDPOINTS_DISPONIBLES.md](04_ENDPOINTS_DISPONIBLES.md)** - Lista de endpoints
-- **[05_PAGINAS_MOCKUPS.md](05_PAGINAS_MOCKUPS.md)** - Ejemplos visuales
-- **[06_ERRORES_COMUNES.md](06_ERRORES_COMUNES.md)** - Más soluciones
+- **[03_Tu_Tarea.md](03_Tu_Tarea.md)** - Tu asignación específica con checklist
+- **[04_Ejemplos_Visuales.md](04_Ejemplos_Visuales.md)** - Mockups y código de ejemplo
+- **[05_Guia_Rapida_API.md](05_Guia_Rapida_API.md)** - Comandos y bindings XAML
+- **[06_Solucion_Problemas.md](06_Solucion_Problemas.md)** - Errores comunes resueltos
+- **[Postman/](Postman/)** - Testing de la API
 
 ---
 
