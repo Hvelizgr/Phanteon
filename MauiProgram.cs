@@ -89,13 +89,25 @@ namespace Phanteon
 #endif
                 ;
 
-            // Registrar ViewModels
-            builder.Services.AddTransient<DispositivosViewModel>();
+            // Registrar ViewModels existentes
             builder.Services.AddTransient<DiagnosticoViewModel>();
 
-            // Registrar Páginas
-            builder.Services.AddTransient<Views.DispositivosPage>();
+            // Registrar páginas existentes
             builder.Services.AddTransient<Views.DiagnosticoPage>();
+
+            // TODO FRONTEND: Registrar aquí sus ViewModels cuando los creen
+            // Ejemplo:
+            // builder.Services.AddTransient<LoginViewModel>();
+            // builder.Services.AddTransient<AlertasViewModel>();
+            // builder.Services.AddTransient<DispositivosViewModel>();
+            // builder.Services.AddTransient<DetalleDispositivoViewModel>();
+
+            // TODO FRONTEND: Registrar aquí sus páginas XAML cuando las creen
+            // Ejemplo:
+            // builder.Services.AddTransient<Views.LoginPage>();
+            // builder.Services.AddTransient<Views.AlertasPage>();
+            // builder.Services.AddTransient<Views.DispositivosPage>();
+            // builder.Services.AddTransient<Views.DetalleDispositivoPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
