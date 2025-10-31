@@ -6,15 +6,12 @@ namespace Phanteon.Services.Implementations
     /// Servicio de almacenamiento seguro usando MAUI SecureStorage
     /// SecureStorage utiliza APIs nativas del sistema:
     /// - Android: EncryptedSharedPreferences (API 23+) o KeyStore
-    /// - iOS: Keychain
-    /// - Windows: Data Protection API
-    /// - macOS: Keychain
     /// </summary>
     public class SecureStorageService : ISecureStorageService
     {
         /// <summary>
         /// Verifica si existe una clave en el almacenamiento seguro
-        /// </summary>
+        /// </summary
         /// <param name="key">Clave a verificar</param>
         /// <returns>True si existe, false si no</returns>
         public bool HasKey(string key)
