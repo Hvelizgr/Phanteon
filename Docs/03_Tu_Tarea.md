@@ -7,11 +7,15 @@
 | Miembro | Código | Tareas Asignadas |
 |---------|--------|------------------|
 | **Héctor Eduardo Véliz Girón** | 000108304 | ✅ **YA COMPLETADAS** (Ver abajo) + LoginPage con su ViewModel |
-| **Persona 1** | _________ | AlertasPage.xaml + AlertasViewModel.cs completos |
-| **Persona 2** | _________ | DetalleDispositivoPage.xaml + DetalleDispositivoViewModel.cs completos |
-| **Persona 3** | _________ | DispositivosPage.xaml (real) + DispositivosViewModel.cs (reemplazar el de prueba) + Navegación y Validaciones |
+| **Persona 1** | _________ | `Features/Alertas/` completo (AlertasPage.xaml + AlertasViewModel.cs) |
+| **Persona 2** | _________ | `Features/Dispositivos/DispositivoDetail/` completo |
+| **Persona 3** | _________ | `Features/Dispositivos/DispositivosList/` completo + Navegación |
 
-**⚠️ ESTRATEGIA:** Cada persona crea su propia View (.xaml + .xaml.cs) junto con su ViewModel (.cs), para facilitar el trabajo en equipo y evitar conflictos. hare 1 adicional (Login) para completar 4 vistas.
+**⚠️ ESTRATEGIA:** Cada persona trabaja en su propia carpeta Feature para evitar conflictos.
+
+**📐 NUEVA ESTRUCTURA:** El proyecto ahora usa **Feature-based Architecture**.
+- Las Views y ViewModels van juntos en `Features/{NombreModulo}/`
+- Ver **[08_Arquitectura.md](08_Arquitectura.md)** para más detalles
 
 ---
 
@@ -54,31 +58,42 @@ Estos modelos **reflejan** la estructura de datos de la API externa para poder c
 - [x] **Alerta.cs** - Modelo para alertas del sistema
 - [x] **HistorialDispositivo.cs** - Modelo para eventos de dispositivos
 
-#### 🔌 Interfaces de Servicios (Refit)
+#### 🔌 Interfaces de Servicios API (Refit)
 
-Ubicación: `Services/Interfaces/`
+**Nueva Ubicación:** `Services/Api/`
 
-Estas interfaces definen **cómo consumir** los endpoints de la API externa.
+Estas interfaces definen **cómo consumir** los endpoints de la API externa usando Refit.
 
-- [x] **IDispositivosService.cs**
-  - GetAllDispositivosAsync()
-  - GetDispositivoByIdAsync(int id)
+- [x] **IDispositivosApi.cs**
+  - GetDispositivosAsync()
+  - GetDispositivoAsync(int id)
   - CreateDispositivoAsync(Dispositivo)
+  - UpdateDispositivoAsync(int id, Dispositivo)
+  - DeleteDispositivoAsync(int id)
+  - GetHistorialAsync(int id)
 
-- [x] **IUsuariosService.cs**
-  - GetAllUsuariosAsync()
-  - GetUsuarioByIdAsync(int id)
+- [x] **IUsuariosApi.cs**
+  - GetUsuariosAsync()
+  - GetUsuarioAsync(int id)
   - CreateUsuarioAsync(Usuario)
+  - UpdateUsuarioAsync(int id, Usuario)
+  - DeleteUsuarioAsync(int id)
 
-- [x] **IAlertasService.cs**
-  - GetAllAlertasAsync()
-  - GetAlertaByIdAsync(int id)
+- [x] **IAlertasApi.cs**
+  - GetAlertasAsync()
+  - GetAlertasPorDispositivoAsync(int dispositivoId)
+  - GetAlertaAsync(int id)
   - CreateAlertaAsync(Alerta)
+  - MarcarAlertaLeidaAsync(int id)
+  - DeleteAlertaAsync(int id)
 
-- [x] **IHistorialDispositivosService.cs**
-  - GetAllHistorialAsync()
-  - GetHistorialByIdAsync(int id)
-  - CreateHistorialAsync(HistorialDispositivo)
+#### 🔧 Servicios Core
+
+**Ubicación:** `Services/{Categoría}/`
+
+- [x] **Http/** - `ApiHttpClientFactory.cs` - Factory de HttpClient
+- [x] **Storage/** - `SecureStorageService.cs` - Almacenamiento seguro
+- [x] **Navigation/** - `NavigationService.cs` - Navegación entre páginas
 
 ### ⚙️ Configuración
 
@@ -95,30 +110,39 @@ Estas interfaces definen **cómo consumir** los endpoints de la API externa.
   - BaseUrl configurada: `https://10.0.2.2:7026`
   - Timeout: 30 segundos
 
-### 🛠️ Helpers y Converters
+### 🧩 Core Components
 
-Ubicación: `Helpers/`
+**Ubicación:** `Core/`
 
-- [x] **InvertedBoolConverter.cs** - Convierte true ↔ false (para bindings)
-- [x] **StringNotEmptyConverter.cs** - Verifica strings no vacíos
-- [x] **SecureStorageService.cs** - Servicio de almacenamiento seguro
+- [x] **ViewModels/BaseViewModel.cs** - Clase base con EstaCargando, MensajeError, etc.
+- [x] **Converters/** - 3 converters XAML listos:
+  - `BoolToColorConverter.cs` - bool → Color
+  - `InvertedBoolConverter.cs` - !bool
+  - `StringNotEmptyConverter.cs` - string → bool
+- [x] **Behaviors/EventToCommandBehavior.cs** - Convierte eventos en comandos
+- [x] **Controls/** - Para controles personalizados futuros
 
-### 🎨 ViewModels Iniciales
+### 🎯 Features Iniciales
 
-- [x] **BaseViewModel.cs** - Clase base con lógica común
-- [x] **DiagnosticoViewModel.cs** - Dashboard con estadísticas
-- [x] **EjemploTesteoViewModel.cs** - Ejemplo de referencia completo
-- [x] **TestConexionApiViewModel.cs** - ViewModel de PRUEBA para verificar conexión con la API
+**Ubicación:** `Features/`
+
+- [x] **Main/** - Página principal
+  - `MainPage.xaml + .xaml.cs` - Vista
+  - `MainViewModel.cs` - ViewModel con MVVM completo
+- [x] **Shared/** - Para componentes compartidos entre features
 
 **⚠️ NOTA IMPORTANTE:**
-- **TestConexionApiViewModel.cs** se mantiene SOLO como HERRAMIENTA de PRUEBA para verificar la conexión con la API
-- NO es la implementación real de la funcionalidad de dispositivos
-- La implementación real de DispositivosViewModel debe ser creada desde cero por Persona 3
+- Todas las nuevas features deben seguir este patrón
+- Cada feature agrupa su View + ViewModel en la misma carpeta
+- Ver **[08_Arquitectura.md](08_Arquitectura.md)** para más detalles
 
-### 📱 Páginas Iniciales
+### 📐 Constants
 
-- [x] **MainPage.xaml + .cs** - Página inicial
-- [x] **DiagnosticoPage.xaml + .cs** - Dashboard básico
+**Ubicación:** `Constants/`
+
+- [x] **ApiEndpoints.cs** - Endpoints de la API
+- [x] **AppConstants.cs** - Constantes generales (timeouts, storage keys, rutas)
+- [x] **ErrorMessages.cs** - Mensajes de error estandarizados
 
 ---
 
@@ -131,9 +155,9 @@ Ubicación: `Helpers/`
 ### Responsabilidad:
 Crear LoginPage completo con su ViewModel para autenticación.
 
-### Ubicación:
-- `ViewModels/LoginViewModel.cs`
-- `Views/LoginPage.xaml` + `LoginPage.xaml.cs`
+### Nueva Ubicación (Feature-based):
+- `Features/Auth/LoginViewModel.cs`
+- `Features/Auth/LoginPage.xaml` + `LoginPage.xaml.cs`
 
 ---
 

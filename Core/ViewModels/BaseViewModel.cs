@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Phanteon.ViewModels
+namespace Phanteon.Core.ViewModels
 {
     /// <summary>
     /// ViewModel base con propiedades comunes para todos los ViewModels

@@ -1,12 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Phanteon.Views.MainPage">
+             xmlns:viewmodel="clr-namespace:Phanteon.Features.Main"
+             x:Class="Phanteon.Features.Main.MainPage"
+             x:DataType="viewmodel:MainViewModel"
+             Title="Phanteon">
 
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
+
             <Image
                 Source="dotnet_bot.png"
                 HeightRequest="185"
@@ -25,19 +29,11 @@
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
             <Button
-                x:Name="CounterBtn"
-                Text="Click me"
+                Text="{Binding CounterText}"
+                Command="{Binding IncrementCounterCommand}"
                 SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
                 HorizontalOptions="Fill" />
 
-            <Button
-                Text="Diagnóstico de API"
-                SemanticProperties.Hint="Abre la página de diagnóstico para probar la conexión con la API"
-                Clicked="OnDiagnosticoClicked"
-                BackgroundColor="#FF6B35"
-                TextColor="White"
-                HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView>
 

@@ -149,42 +149,73 @@ start Phanteon.sln
 
 ## 🛠️ EMPEZAR A DESARROLLAR
 
+**📖 NUEVA ESTRUCTURA:** El proyecto ahora usa **Feature-based Architecture**.
+
+Ver documentación completa:
+- **[08_Arquitectura.md](08_Arquitectura.md)** - Arquitectura del proyecto
+- **[10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md)** - Guía rápida con ejemplos
+
+### Nueva Organización:
+
+```
+Features/               ← Views + ViewModels por módulo
+├── Main/
+│   ├── MainPage.xaml
+│   ├── MainPage.xaml.cs
+│   └── MainViewModel.cs
+├── Alertas/           ← Crear tu módulo aquí
+├── Dispositivos/
+└── Auth/
+
+Core/                  ← Componentes reutilizables
+├── ViewModels/
+│   └── BaseViewModel.cs  ← Heredar de aquí
+├── Converters/
+└── Behaviors/
+
+Services/              ← Servicios organizados
+├── Api/              ← Interfaces Refit
+├── Http/
+├── Storage/
+└── Navigation/
+```
+
 ## (ViewModels):
 
-**Crear un nuevo ViewModel:**
+**Crear un nuevo ViewModel (en su Feature):**
 
 ```csharp
-// ViewModels/AlertasViewModel.cs
+// Features/Alertas/AlertasViewModel.cs
+using Phanteon.Core.ViewModels;
+using Phanteon.Services.Api;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Phanteon.Models;
-using Phanteon.Services.Interfaces;
 using System.Collections.ObjectModel;
 
-namespace Phanteon.ViewModels
+namespace Phanteon.Features.Alertas
 {
-    public partial class AlertasViewModel : ObservableObject
+    public partial class AlertasViewModel : BaseViewModel  // ← Heredar de BaseViewModel
     {
-        private readonly IAlertasService _alertasService;
+        private readonly IAlertasApi _alertasApi;
 
-        public AlertasViewModel(IAlertasService alertasService)
+        public AlertasViewModel(IAlertasApi alertasApi)
         {
-            _alertasService = alertasService;
+            _alertasApi = alertasApi;
+            Titulo = "Alertas";  // Viene de BaseViewModel
         }
 
         [ObservableProperty]
         private ObservableCollection<Alerta> alertas = new();
 
-        [ObservableProperty]
-        private bool estaCargando = false;
-
         [RelayCommand]
-        private async Task CargarAlertas()
+        private async Task CargarAlertasAsync()
         {
-            EstaCargando = true;
             try
             {
-                var lista = await _alertasService.GetAllAlertasAsync();
+                EstaCargando = true;  // Viene de BaseViewModel
+                LimpiarError();       // Viene de BaseViewModel
+
+                var lista = await _alertasApi.GetAlertasAsync();
                 Alertas.Clear();
                 foreach (var alerta in lista)
                 {
@@ -193,8 +224,7 @@ namespace Phanteon.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error",
-                    $"No se pudieron cargar las alertas: {ex.Message}", "OK");
+                ManejarError(ex, "cargar alertas");  // Viene de BaseViewModel
             }
             finally
             {
@@ -207,32 +237,45 @@ namespace Phanteon.ViewModels
 
 **Registrar en MauiProgram.cs:**
 ```csharp
+// ViewModels
 builder.Services.AddTransient<AlertasViewModel>();
+
+// Pages
+builder.Services.AddTransient<AlertasPage>();
 ```
 
 ---
 
 ### (Páginas XAML):
 
-**Crear una nueva página:**
+**Crear una nueva página (en su Feature):**
 
 ```xml
-<!-- Views/AlertasPage.xaml -->
+<!-- Features/Alertas/AlertasPage.xaml -->
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodel="clr-namespace:Phanteon.ViewModels"
+             xmlns:vm="clr-namespace:Phanteon.Features.Alertas"
              xmlns:models="clr-namespace:Phanteon.Models"
-             x:Class="Phanteon.Views.AlertasPage"
-             x:DataType="viewmodel:AlertasViewModel"
-             Title="Alertas">
+             x:Class="Phanteon.Features.Alertas.AlertasPage"
+             x:DataType="vm:AlertasViewModel"
+             Title="{Binding Titulo}">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Actualizar" Command="{Binding CargarAlertasCommand}"/>
-    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="Auto,*">
+        <!-- Indicador de carga (usando BaseViewModel) -->
+        <ActivityIndicator IsRunning="{Binding EstaCargando}"
+                          IsVisible="{Binding EstaCargando}"
+                          Grid.Row="0"/>
 
-    <Grid>
-        <CollectionView ItemsSource="{Binding Alertas}">
+        <!-- Mensaje de error (usando BaseViewModel) -->
+        <Label Text="{Binding MensajeError}"
+               IsVisible="{Binding MensajeError, Converter={StaticResource StringNotEmptyConverter}}"
+               TextColor="Red"
+               Grid.Row="0"/>
+
+        <!-- Lista de alertas -->
+        <CollectionView ItemsSource="{Binding Alertas}"
+                       Grid.Row="1">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Alerta">
                     <Frame Padding="10" Margin="10">
@@ -246,73 +289,62 @@ builder.Services.AddTransient<AlertasViewModel>();
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <ActivityIndicator IsRunning="{Binding EstaCargando}"
-                          IsVisible="{Binding EstaCargando}"/>
     </Grid>
 </ContentPage>
 ```
 
 ```csharp
-// Views/AlertasPage.xaml.cs
-namespace Phanteon.Views;
+// Features/Alertas/AlertasPage.xaml.cs
+namespace Phanteon.Features.Alertas;
 
 public partial class AlertasPage : ContentPage
 {
-    private readonly AlertasViewModel _viewModel;
-
     public AlertasPage(AlertasViewModel viewModel)
     {
         InitializeComponent();
-        _viewModel = viewModel;
-        BindingContext = _viewModel;
+        BindingContext = viewModel;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.CargarAlertasCommand.ExecuteAsync(null);
+
+        if (BindingContext is AlertasViewModel vm)
+        {
+            await vm.CargarAlertasCommand.ExecuteAsync(null);
+        }
     }
 }
-```
-
-**Registrar en MauiProgram.cs:**
-```csharp
-builder.Services.AddTransient<AlertasPage>();
 ```
 
 ---
 
 ### (Navegación):
 
-**Configurar AppShell.xaml:**
+**Configurar AppShell.xaml (con la nueva estructura):**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:views="clr-namespace:Phanteon.Views"
+       xmlns:main="clr-namespace:Phanteon.Features.Main"
+       xmlns:alertas="clr-namespace:Phanteon.Features.Alertas"
        x:Class="Phanteon.AppShell"
        FlyoutBehavior="Flyout">
 
-    <FlyoutItem Title="Dashboard" Icon="home.png">
-        <ShellContent Route="diagnostico"
-                     ContentTemplate="{DataTemplate views:DiagnosticoPage}"/>
-    </FlyoutItem>
-
-    <FlyoutItem Title="Dispositivos" Icon="devices.png">
-        <ShellContent Route="dispositivos"
-                     ContentTemplate="{DataTemplate views:DispositivosPage}"/>
+    <FlyoutItem Title="Home" Icon="home.png">
+        <ShellContent Route="main"
+                     ContentTemplate="{DataTemplate main:MainPage}"/>
     </FlyoutItem>
 
     <FlyoutItem Title="Alertas" Icon="alert.png">
         <ShellContent Route="alertas"
-                     ContentTemplate="{DataTemplate views:AlertasPage}"/>
+                     ContentTemplate="{DataTemplate alertas:AlertasPage}"/>
     </FlyoutItem>
 </Shell>
 ```
 
-**Registrar rutas en AppShell.xaml.cs:**
+**Registrar rutas adicionales en AppShell.xaml.cs:**
 ```csharp
 namespace Phanteon;
 
@@ -322,8 +354,8 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
-        Routing.RegisterRoute("detalleDispositivo", typeof(Views.DetalleDispositivoPage));
-        Routing.RegisterRoute("login", typeof(Views.LoginPage));
+        // Rutas para navegación programática
+        Routing.RegisterRoute("dispositivodetail", typeof(Features.Dispositivos.DispositivoDetailPage));
     }
 }
 ```
@@ -344,14 +376,22 @@ public partial class AppShell : Shell
 
 ## 📚 Documentos Relacionados
 
+### Documentación Original
 - **[03_Tu_Tarea.md](03_Tu_Tarea.md)** - Tu asignación específica con checklist
 - **[04_Ejemplos_Visuales.md](04_Ejemplos_Visuales.md)** - Mockups y código de ejemplo
 - **[05_Guia_Rapida_API.md](05_Guia_Rapida_API.md)** - Comandos y bindings XAML
 - **[06_Solucion_Problemas.md](06_Solucion_Problemas.md)** - Errores comunes resueltos
+- **[07_Como_Hacer_Commits.md](07_Como_Hacer_Commits.md)** - Guía de Git
 - **[Postman/](Postman/)** - Testing de la API
+
+### Nueva Documentación (Estructura Actualizada)
+- **[08_Arquitectura.md](08_Arquitectura.md)** - 📐 Arquitectura completa del proyecto
+- **[09_Configuracion_Servicios.md](09_Configuracion_Servicios.md)** - ⚙️ Setup de APIs con Refit
+- **[10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md)** - 🚀 Guía rápida con ejemplos
+- **[11_Lista_Tareas.md](11_Lista_Tareas.md)** - ✅ Checklist de tareas pendientes
 
 ---
 
 **¡Listo para empezar! 🚀**
 
-_Actualizado: 29/10/2024_
+_Última actualización: 11/11/2025 - Estructura reorganizada a Feature-based Architecture_

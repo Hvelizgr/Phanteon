@@ -4,12 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Phanteon"
-    xmlns:views="clr-namespace:Phanteon.Views"
+    xmlns:main="clr-namespace:Phanteon.Features.Main"
     Title="Phanteon">
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate views:MainPage}"
+        ContentTemplate="{DataTemplate main:MainPage}"
         Route="MainPage" />
 
 </Shell>
