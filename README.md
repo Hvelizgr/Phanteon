@@ -27,62 +27,83 @@ Phanteon es una aplicación cliente que consume una API externa ([DevicesAPI](ht
 - Windows
 - macOS
 
-## 🏗️ Arquitectura del Proyecto
+## 🏗️ Arquitectura del Proyecto (Actualizada - Feature-based)
 
 ```
 Phanteon/
-├── Models/              # Modelos de datos sincronizados con la API
+├── Features/            # Módulos por funcionalidad (Views + ViewModels juntos)
+│   ├── Main/           # Página principal
+│   │   ├── MainPage.xaml/.cs
+│   │   └── MainViewModel.cs
+│   ├── Auth/           # Autenticación (pendiente)
+│   ├── Dispositivos/   # Gestión de dispositivos (pendiente)
+│   └── Alertas/        # Sistema de alertas (pendiente)
+│
+├── Core/                # Componentes reutilizables
+│   ├── ViewModels/     # BaseViewModel con EstaCargando, MensajeError, etc.
+│   ├── Converters/     # BoolToColor, InvertedBool, StringNotEmpty
+│   ├── Behaviors/      # EventToCommand
+│   └── Controls/       # Controles personalizados (futuro)
+│
+├── Services/            # Servicios organizados por categoría
+│   ├── Api/            # Interfaces Refit para APIs REST
+│   │   ├── IDispositivosApi.cs
+│   │   ├── IUsuariosApi.cs
+│   │   └── IAlertasApi.cs
+│   ├── Http/           # ApiHttpClientFactory
+│   ├── Storage/        # SecureStorageService
+│   └── Navigation/     # NavigationService
+│
+├── Models/              # Modelos de datos
 │   ├── Alerta.cs
 │   ├── Dispositivo.cs
 │   ├── HistorialDispositivo.cs
 │   └── Usuario.cs
-├── ViewModels/          # Lógica de presentación (MVVM)
-│   ├── BaseViewModel.cs              # Clase base con propiedades comunes
-│   ├── DiagnosticoViewModel.cs       # Dashboard (ya implementado)
-│   ├── EjemploTesteoViewModel.cs     # Ejemplo de referencia completo
-│   └── TestConexionApiViewModel.cs   # Solo para pruebas de conexión
-├── Views/               # Interfaces de usuario (XAML)
-│   ├── DiagnosticoPage.xaml/.cs      # Dashboard (ya implementado)
-│   └── MainPage.xaml/.cs             # Página inicial (ya implementada)
-├── Services/
-│   ├── Interfaces/      # Interfaces Refit para consumo de API
-│   │   ├── IAlertasService.cs
-│   │   ├── IDispositivosService.cs
-│   │   ├── IHistorialDispositivosService.cs
-│   │   └── IUsuariosService.cs
-│   └── Implementations/ # Implementaciones de servicios locales
-│       └── SecureStorageService.cs
-├── Helpers/             # Utilidades y configuración
-│   ├── ApiConfiguration.cs           # Configuración de URL y timeout
-│   ├── ReferenciasAPI.cs             # Referencias a endpoints
-│   ├── InvertedBoolConverter.cs      # Converter para bindings
-│   └── StringNotEmptyConverter.cs    # Converter para validaciones
-├── Docs/                # Documentación del proyecto
-│   ├── 01_Introduccion.md
-│   ├── 02_Empezar_Aqui.md
-│   ├── 03_Tu_Tarea.md
-│   ├── 04_Ejemplos_Visuales.md
-│   ├── 05_Guia_Rapida_API.md
-│   ├── 06_Solucion_Problemas.md
-│   ├── 07_Como_Hacer_Commits.md
-│   └── Postman/         # Colección de testing de la API
-├── Resources/           # Recursos de la aplicación (fuentes, iconos, etc.)
+│
+├── Constants/           # Constantes centralizadas
+│   ├── ApiEndpoints.cs
+│   ├── AppConstants.cs
+│   └── ErrorMessages.cs
+│
+├── Helpers/             # Utilidades
+│   └── ApiConfiguration.cs
+│
+├── Data/                # Capa de datos (repositorios, DB local)
+│   ├── Repositories/
+│   └── Local/
+│
+├── Docs/                # 📚 Documentación completa
+│   ├── 01-07: Docs originales
+│   ├── 08_Arquitectura.md              # Nueva arquitectura detallada
+│   ├── 09_Configuracion_Servicios.md   # Setup APIs con Refit
+│   ├── 10_Guia_Inicio_Rapido.md        # Guía rápida con ejemplos
+│   ├── 11_Lista_Tareas.md              # Checklist de tareas
+│   └── Postman/
+│
+├── Resources/           # Recursos de la aplicación
 ├── Platforms/           # Código específico de plataforma
-└── MauiProgram.cs       # Configuración e inyección de dependencias
+└── MauiProgram.cs       # DI y configuración
 ```
 
 ## 📚 Documentación
 
-La documentación completa del proyecto está organizada en la carpeta `Docs/` (léelos en orden):
+### Documentación Original (Base del Proyecto)
+1. **[01_Introduccion.md](Docs/01_Introduccion.md)** - Contexto del proyecto
+2. **[02_Empezar_Aqui.md](Docs/02_Empezar_Aqui.md)** - ⚡ Guía de inicio rápido (EMPIEZA AQUÍ)
+3. **[03_Tu_Tarea.md](Docs/03_Tu_Tarea.md)** - División de tareas del equipo
+4. **[04_Ejemplos_Visuales.md](Docs/04_Ejemplos_Visuales.md)** - Mockups y código de ejemplo
+5. **[05_Guia_Rapida_API.md](Docs/05_Guia_Rapida_API.md)** - Comandos y bindings XAML
+6. **[06_Solucion_Problemas.md](Docs/06_Solucion_Problemas.md)** - Errores comunes
+7. **[07_Como_Hacer_Commits.md](Docs/07_Como_Hacer_Commits.md)** - Guía de Git
 
-1. **[01_Introduccion.md](Docs/01_Introduccion.md)** - Lee esto primero: contexto del proyecto y qué ya está hecho
-2. **[02_Empezar_Aqui.md](Docs/02_Empezar_Aqui.md)** - Guía de 5 minutos para configurar todo
-3. **[03_Tu_Tarea.md](Docs/03_Tu_Tarea.md)** - Tu asignación específica con checklist completo
-4. **[04_Ejemplos_Visuales.md](Docs/04_Ejemplos_Visuales.md)** - Mockups y código de ejemplo para copiar
-5. **[05_Guia_Rapida_API.md](Docs/05_Guia_Rapida_API.md)** - Comandos y bindings XAML para usar
-6. **[06_Solucion_Problemas.md](Docs/06_Solucion_Problemas.md)** - Errores comunes y cómo resolverlos
-7. **[07_Como_Hacer_Commits.md](Docs/07_Como_Hacer_Commits.md)** - Cómo escribir buenos commits
-8. **[Postman/](Docs/Postman/)** - Colección para probar la API con Postman
+### Nueva Documentación (Estructura Actualizada) ⭐
+8. **[08_Arquitectura.md](Docs/08_Arquitectura.md)** - 📐 Arquitectura completa del proyecto
+9. **[09_Configuracion_Servicios.md](Docs/09_Configuracion_Servicios.md)** - ⚙️ Setup de APIs con Refit
+10. **[10_Guia_Inicio_Rapido.md](Docs/10_Guia_Inicio_Rapido.md)** - 🚀 Guía con ejemplos de código
+11. **[11_Lista_Tareas.md](Docs/11_Lista_Tareas.md)** - ✅ Checklist de tareas pendientes
+
+### Testing
+- **[Postman/](Docs/Postman/)** - Colecciones Postman para testing de la API
 
 ## 🔧 Requisitos Previos
 
@@ -182,14 +203,14 @@ El proyecto incluye `TestConexionApiViewModel.cs` que sirve ÚNICAMENTE para ver
 - **Héctor Eduardo Véliz Girón** (000108304) - Lead Developer & Infrastructure
 - 3 desarrolladores adicionales (Ver [03_Tu_Tarea.md](Docs/03_Tu_Tarea.md))
 
-### División de Trabajo
+### División de Trabajo (Actualizado - Feature-based)
 
-Cada miembro del equipo crea su propia View + ViewModel completos:
+Cada miembro trabaja en su propia carpeta Feature:
 
-- **Héctor:** LoginPage + LoginViewModel (adicional a infraestructura)
-- **Persona 1:** AlertasPage + AlertasViewModel
-- **Persona 2:** DetalleDispositivoPage + DetalleDispositivoViewModel
-- **Persona 3:** DispositivosPage + DispositivosViewModel + Navegación
+- **Héctor:** `Features/Auth/` - LoginPage + LoginViewModel
+- **Persona 1:** `Features/Alertas/` - AlertasPage + AlertasViewModel
+- **Persona 2:** `Features/Dispositivos/DispositivoDetail/` - Detalle de dispositivo
+- **Persona 3:** `Features/Dispositivos/DispositivosList/` - Lista + Navegación
 
 ## 📦 Paquetes NuGet Principales
 
