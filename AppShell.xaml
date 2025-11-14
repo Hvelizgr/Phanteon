@@ -5,11 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Phanteon"
     xmlns:main="clr-namespace:Phanteon.Features.Main"
-    Title="Phanteon">
+    xmlns:auth="clr-namespace:Phanteon.Features.Auth"
+    Title="Phanteon"
+    Shell.FlyoutBehavior="Disabled">
 
+    <!-- Página de Login (inicial) -->
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate main:MainPage}"
-        Route="MainPage" />
+        Title="Login"
+        ContentTemplate="{DataTemplate auth:LoginPage}"
+        Route="Login" />
+
+    <!-- Las siguientes páginas están ocultas del Shell y solo se accede por navegación -->
 
 </Shell>

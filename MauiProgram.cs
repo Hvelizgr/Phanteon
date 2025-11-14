@@ -6,7 +6,12 @@ using Phanteon.Helpers;
 using Phanteon.Services.Http;
 using Phanteon.Services.Storage;
 using Phanteon.Services.Navigation;
+using Phanteon.Services.Auth;
 using Phanteon.Features.Main;
+using Phanteon.Features.Auth;
+using Phanteon.Features.Profile;
+using Phanteon.Services.Api;
+using Refit;
 
 namespace Phanteon
 {
@@ -28,18 +33,34 @@ namespace Phanteon
             builder.Services.AddSingleton<IApiHttpClientFactory, ApiHttpClientFactory>();
             builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
+            builder.Services.AddSingleton<IAuthService, AuthService>();
 
             // ========== ViewModels ==========
             builder.Services.AddTransient<MainViewModel>();
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<RegisterViewModel>();
+            builder.Services.AddTransient<ProfileViewModel>();
 
             // ========== Pages ==========
             builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<RegisterPage>();
+            builder.Services.AddTransient<ProfilePage>();
 
-            // TODO: Cuando crees servicios API con Refit, regístralos aquí
-            // Ejemplo:
-            // builder.Services.AddRefitClient<IDispositivosApi>()
-            //     .ConfigureHttpClient(c => c.BaseAddress = new Uri(ApiConfiguration.BaseUrl))
-            //     .AddPolicyHandler(GetRetryPolicy());
+            // ========== APIs con Refit ==========
+            builder.Services.AddRefitClient<IDispositivosApi>()
+                .ConfigureHttpClient(c =>
+                {
+                    c.BaseAddress = new Uri(ApiConfiguration.BaseUrl);
+                    c.Timeout = ApiConfiguration.Timeout;
+                });
+
+            builder.Services.AddRefitClient<IUsuariosApi>()
+                .ConfigureHttpClient(c =>
+                {
+                    c.BaseAddress = new Uri(ApiConfiguration.BaseUrl);
+                    c.Timeout = ApiConfiguration.Timeout;
+                });
 
 #if DEBUG
     		builder.Logging.AddDebug();

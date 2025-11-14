@@ -11,19 +11,19 @@ namespace Phanteon.Services.Api
         /// <summary>
         /// Obtiene todos los dispositivos
         /// </summary>
-        [Get("/api/dispositivos")]
+        [Get("/api/dispositivos/getall")]
         Task<List<Dispositivo>> GetDispositivosAsync();
 
         /// <summary>
         /// Obtiene un dispositivo por ID
         /// </summary>
-        [Get("/api/dispositivos/{id}")]
+        [Get("/api/dispositivos/getbyid/{id}")]
         Task<Dispositivo> GetDispositivoAsync(int id);
 
         /// <summary>
         /// Crea un nuevo dispositivo
         /// </summary>
-        [Post("/api/dispositivos")]
+        [Post("/api/dispositivos/post")]
         Task<Dispositivo> CreateDispositivoAsync([Body] Dispositivo dispositivo);
 
         /// <summary>

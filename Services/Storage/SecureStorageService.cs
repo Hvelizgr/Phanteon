@@ -5,10 +5,28 @@ namespace Phanteon.Services.Storage
     /// </summary>
     public class SecureStorageService : ISecureStorageService
     {
+        // Límite de tamaño para SecureStorage (2KB es un límite seguro para la mayoría de plataformas)
+        private const int MaxValueSize = 2048;
+
         public async Task SetAsync(string key, string value)
         {
             try
             {
+                // Validar que el valor no sea nulo
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                // Validar tamaño del valor
+                if (value.Length > MaxValueSize)
+                {
+                    throw new InvalidOperationException(
+                        $"El valor para la clave '{key}' excede el tamaño máximo permitido " +
+                        $"({value.Length} caracteres). Máximo: {MaxValueSize} caracteres. " +
+                        $"SecureStorage no debe usarse para datos grandes.");
+                }
+
                 await SecureStorage.Default.SetAsync(key, value);
             }
             catch (Exception ex)

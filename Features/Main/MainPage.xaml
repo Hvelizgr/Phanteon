@@ -6,6 +6,12 @@
              x:DataType="viewmodel:MainViewModel"
              Title="Phanteon">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Perfil"
+                     IconImageSource="user.png"
+                     Command="{Binding NavigateToProfileCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
