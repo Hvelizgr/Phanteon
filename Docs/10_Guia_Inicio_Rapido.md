@@ -1,8 +1,8 @@
-# Guía Rápida - Phanteon
+# Guía de Desarrollo Rápido - Phanteon
 
-## Estructura del Proyecto Actualizada
+## Estructura del Proyecto
 
-Tu proyecto ahora tiene una estructura profesional y escalable:
+El proyecto utiliza una estructura profesional y escalable:
 
 ```
 Phanteon/
@@ -28,14 +28,7 @@ Phanteon/
 └── Data/                  # Repositorios y DB local
 ```
 
-## Archivos Importantes Creados
-
-### 1. Documentación
-- `ARCHITECTURE.md` - Arquitectura detallada del proyecto
-- `SERVICES_SETUP.md` - Guía de configuración de servicios API
-- `QUICK_START.md` - Esta guía
-
-### 2. Servicios Listos para Usar
+## Servicios Disponibles
 - ✅ `IApiHttpClientFactory` - Factory de HttpClient
 - ✅ `ISecureStorageService` - Almacenamiento seguro
 - ✅ `INavigationService` - Navegación entre páginas
@@ -43,68 +36,23 @@ Phanteon/
 - ✅ `IUsuariosApi` - API de Usuarios (Refit)
 - ✅ `IAlertasApi` - API de Alertas (Refit)
 
-### 3. Core Components
-- ✅ `BaseViewModel` - ViewModel base con propiedades comunes
-- ✅ `BoolToColorConverter` - Convierte bool a color
-- ✅ `InvertedBoolConverter` - Invierte booleanos
-- ✅ `StringNotEmptyConverter` - Verifica si string no está vacío
-- ✅ `EventToCommandBehavior` - Convierte eventos en comandos
+## Core Components
+- `BaseViewModel` - ViewModel base con propiedades comunes
+- `BoolToColorConverter` - Convierte bool a color
+- `InvertedBoolConverter` - Invierte booleanos
+- `StringNotEmptyConverter` - Verifica si string no está vacío
+- `EventToCommandBehavior` - Convierte eventos en comandos
 
-### 4. Constants
-- ✅ `ApiEndpoints` - Endpoints de la API
-- ✅ `AppConstants` - Constantes generales
-- ✅ `ErrorMessages` - Mensajes de error estandarizados
+## Constants
+- `ApiEndpoints` - Endpoints de la API
+- `AppConstants` - Constantes generales
+- `ErrorMessages` - Mensajes de error estandarizados
 
-## Próximos Pasos Recomendados
+---
 
-### 1. Configurar la URL de tu API
+## Ejemplo: Módulo de Dispositivos
 
-Actualiza `Helpers/ApiConfiguration.cs`:
-
-```csharp
-public static class ApiConfiguration
-{
-    public static string BaseUrl => "https://tu-api.com";  // ← Cambiar aquí
-    public static TimeSpan Timeout => TimeSpan.FromSeconds(30);
-}
-```
-
-### 2. Registrar Servicios API (Opcional)
-
-Si quieres usar los servicios API con Refit, descomentar en `MauiProgram.cs`:
-
-```csharp
-// Ejemplo de registro de API:
-builder.Services.AddRefitClient<IDispositivosApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri(ApiConfiguration.BaseUrl));
-
-builder.Services.AddRefitClient<IUsuariosApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri(ApiConfiguration.BaseUrl));
-
-builder.Services.AddRefitClient<IAlertasApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri(ApiConfiguration.BaseUrl));
-```
-
-Ver `SERVICES_SETUP.md` para más opciones (con Polly, autenticación, etc.)
-
-### 3. Actualizar Endpoints de API
-
-Edita `Constants/ApiEndpoints.cs` con las rutas de tu API:
-
-```csharp
-public static class ApiEndpoints
-{
-    public const string Dispositivos = "/api/dispositivos";
-    public const string Usuarios = "/api/usuarios";
-    public const string Alertas = "/api/alertas";
-}
-```
-
-### 4. Crear Tu Primera Feature
-
-#### Ejemplo: Módulo de Dispositivos
-
-1. **Crear estructura**:
+### Estructura
 ```
 Features/Dispositivos/
 ├── DispositivosListPage.xaml
@@ -112,7 +60,7 @@ Features/Dispositivos/
 └── DispositivosListViewModel.cs
 ```
 
-2. **ViewModel** (`DispositivosListViewModel.cs`):
+### ViewModel
 ```csharp
 using Phanteon.Core.ViewModels;
 using Phanteon.Services.Api;
@@ -160,7 +108,7 @@ namespace Phanteon.Features.Dispositivos
 }
 ```
 
-3. **View** (`DispositivosListPage.xaml`):
+### View (XAML)
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -201,7 +149,7 @@ namespace Phanteon.Features.Dispositivos
 </ContentPage>
 ```
 
-4. **Code-behind** (`DispositivosListPage.xaml.cs`):
+### Code-behind
 ```csharp
 namespace Phanteon.Features.Dispositivos
 {
@@ -227,7 +175,7 @@ namespace Phanteon.Features.Dispositivos
 }
 ```
 
-5. **Registrar en `MauiProgram.cs`**:
+### Registro en MauiProgram.cs
 ```csharp
 // ViewModels
 builder.Services.AddTransient<DispositivosListViewModel>();
@@ -236,7 +184,7 @@ builder.Services.AddTransient<DispositivosListViewModel>();
 builder.Services.AddTransient<DispositivosListPage>();
 ```
 
-6. **Agregar ruta en `AppShell.xaml`**:
+### Registro de Ruta en AppShell
 ```xml
 <ShellContent
     Title="Dispositivos"
@@ -329,13 +277,7 @@ var token = await _secureStorage.GetAsync(AppConstants.StorageKeys.AuthToken);
 _secureStorage.Remove(AppConstants.StorageKeys.AuthToken);
 ```
 
-## Limpieza Pendiente
-
-Puedes eliminar las siguientes carpetas/archivos antiguos si ya no los necesitas:
-
-- `Views/Main/` (ya movido a `Features/Main/`)
-- `ViewModels/` (ya movido a `Core/ViewModels/`)
-- `Services/Interfaces/` y `Services/Implementations/` (ya movidos a subcarpetas en `Services/`)
+---
 
 ## Recursos Adicionales
 
@@ -344,12 +286,6 @@ Puedes eliminar las siguientes carpetas/archivos antiguos si ya no los necesitas
 - [Refit](https://github.com/reactiveui/refit)
 - [Polly](https://github.com/App-vNext/Polly)
 
-## Verificar Build
+---
 
-Para verificar que todo compila correctamente:
-
-```bash
-dotnet build
-```
-
-El proyecto debería compilar sin errores ✅
+**Última actualización:** Noviembre 2025

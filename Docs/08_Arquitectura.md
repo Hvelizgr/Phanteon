@@ -110,11 +110,9 @@ Navegación entre páginas
 #### Constants
 Valores constantes centralizados (endpoints, mensajes, rutas)
 
-## Agregar una Nueva Característica
+## Ejemplo: Agregar Módulo de Dispositivos
 
-### Ejemplo: Agregar módulo de Dispositivos
-
-1. **Crear estructura de carpetas**:
+### Estructura de carpetas
 ```
 Features/Dispositivos/
 ├── DispositivosListPage.xaml
@@ -125,7 +123,7 @@ Features/Dispositivos/
 └── DispositivoDetailViewModel.cs
 ```
 
-2. **Registrar en MauiProgram.cs**:
+### Registro en MauiProgram.cs
 ```csharp
 // ViewModels
 builder.Services.AddTransient<DispositivosListViewModel>();
@@ -136,7 +134,7 @@ builder.Services.AddTransient<DispositivosListPage>();
 builder.Services.AddTransient<DispositivoDetailPage>();
 ```
 
-3. **Agregar rutas en AppShell.xaml**:
+### Rutas en AppShell.xaml
 ```xml
 <ShellContent
     Title="Dispositivos"
@@ -144,7 +142,7 @@ builder.Services.AddTransient<DispositivoDetailPage>();
     Route="Dispositivos" />
 ```
 
-4. **Crear servicio API (opcional)**:
+### Servicio API (opcional)
 ```csharp
 // Services/Api/IDispositivosApi.cs
 public interface IDispositivosApi
@@ -227,11 +225,6 @@ builder.Services.AddRefitClient<IDispositivosApi>()
    }
    ```
 
-## Próximos Pasos
+---
 
-- [ ] Implementar autenticación (Features/Auth)
-- [ ] Crear servicios API con Refit
-- [ ] Implementar base de datos local (SQLite)
-- [ ] Agregar logging centralizado
-- [ ] Configurar CI/CD
-- [ ] Agregar pruebas unitarias
+**Última actualización:** Noviembre 2025

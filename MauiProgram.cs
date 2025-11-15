@@ -22,6 +22,10 @@ using Refit;
 
 namespace Phanteon
 {
+    /// <summary>
+    /// Configuración principal de la aplicación MAUI
+    /// Registra servicios, ViewModels, Pages y APIs
+    /// </summary>
     public static class MauiProgram
     {
         public static MauiApp CreateMauiApp()
@@ -35,24 +39,23 @@ namespace Phanteon
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 
-                    // Font Awesome Icons
+                    // Font Awesome para iconos
                     fonts.AddFont("fa-solid-900.ttf", "FontAwesomeSolid");
                     fonts.AddFont("fa-regular-400.ttf", "FontAwesomeRegular");
                     fonts.AddFont("fa-brands-400.ttf", "FontAwesomeBrands");
                 });
 
-            // ========== Servicios Core (aplicando SOLID) ==========
-            // Singleton: Servicios que viven durante toda la aplicación
+            // Servicios core - Singleton para persistencia durante toda la app
             builder.Services.AddSingleton<IApiHttpClientFactory, ApiHttpClientFactory>();
             builder.Services.AddSingleton<ISecureStorageService, SecureStorageService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
 
-            // Servicios de autenticación y sesión (SRP, DIP, ISP aplicados)
+            // Servicios de autenticación y manejo de sesión
             builder.Services.AddSingleton<ISessionManager, SessionManager>();
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<IStartupNavigationService, StartupNavigationService>();
 
-            // ========== ViewModels ==========
+            // ViewModels - Transient para nueva instancia cada vez
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<RegisterViewModel>();
@@ -61,7 +64,7 @@ namespace Phanteon
             builder.Services.AddTransient<DispositivoDetailViewModel>();
             builder.Services.AddTransient<AlertasViewModel>();
 
-            // ========== Pages ==========
+            // Pages - Transient para inyección de ViewModels
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<RegisterPage>();
@@ -70,7 +73,7 @@ namespace Phanteon
             builder.Services.AddTransient<DispositivoDetailPage>();
             builder.Services.AddTransient<AlertasPage>();
 
-            // ========== APIs con Refit ==========
+            // APIs con Refit - Cliente HTTP tipado para consumo de API REST
             builder.Services.AddRefitClient<IDispositivosApi>()
                 .ConfigureHttpClient(c =>
                 {
@@ -99,7 +102,7 @@ namespace Phanteon
             return builder.Build();
         }
 
-        // Ejemplo de política de reintentos para Refit
+        // Política de reintentos con Polly (opcional, descomentado si se necesita)
         // private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         // {
         //     return HttpPolicyExtensions

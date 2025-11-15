@@ -14,12 +14,10 @@
 
 ## 🎯 Inicio Rápido
 
-**¿Primera vez en el proyecto?** Sigue esta ruta de 30 minutos:
+**¿Primera vez en el proyecto?** Sigue esta ruta de 20 minutos:
 
-1. **[01_Introduccion.md](01_Introduccion.md)** (5 min) → Contexto general
-2. **[02_Empezar_Aqui.md](02_Empezar_Aqui.md)** (10 min) → ⚡ Setup completo
-3. **[08_Arquitectura.md](08_Arquitectura.md)** (10 min) → Estructura del proyecto
-4. **[03_Tu_Tarea.md](03_Tu_Tarea.md)** (5 min) → Tu asignación específica
+1. **[02_Empezar_Aqui.md](02_Empezar_Aqui.md)** (10 min) → Configuración inicial
+2. **[08_Arquitectura.md](08_Arquitectura.md)** (10 min) → Estructura del proyecto
 
 ---
 
@@ -27,20 +25,10 @@
 
 ### 🟢 Fundamentos (Empieza aquí)
 
-1. **[01_Introduccion.md](01_Introduccion.md)** (11 KB)
-   - Contexto del proyecto
-   - Qué es Phanteon
-   - Tecnologías utilizadas
-
-2. **[02_Empezar_Aqui.md](02_Empezar_Aqui.md)** ⚡ **EMPIEZA AQUÍ** (11 KB)
-   - Guía de inicio rápido
-   - Configuración en 5 minutos
-   - Ejemplos de código con la nueva estructura
-
-3. **[03_Tu_Tarea.md](03_Tu_Tarea.md)** (23 KB)
-   - División de tareas del equipo
-   - Checklist completo
-   - Ubicaciones actualizadas (Feature-based)
+**[02_Empezar_Aqui.md](02_Empezar_Aqui.md)** ⚡ **EMPIEZA AQUÍ**
+- Guía de configuración inicial
+- Setup del entorno
+- Configuración de la API
 
 ---
 
@@ -72,49 +60,34 @@
 
 ---
 
-## ⭐ Nueva Documentación (Estructura Actualizada)
+## ⭐ Arquitectura y Patrones
 
-### Arquitectura y Patrones
+**[08_Arquitectura.md](08_Arquitectura.md)** 📐
+- Feature-based Architecture completa
+- Patrones y principios (MVVM, DI, etc.)
+- Estructura de carpetas detallada
+- Convenciones de nomenclatura
+- Buenas prácticas
 
-8. **[08_Arquitectura.md](08_Arquitectura.md)** 📐 (8 KB)
-   - **Feature-based Architecture** completa
-   - Patrones y principios (MVVM, DI, etc.)
-   - Estructura de carpetas detallada
-   - Cómo agregar nuevas features
-   - Convenciones de nomenclatura
-   - Buenas prácticas
+**[09_Configuracion_Servicios.md](09_Configuracion_Servicios.md)** ⚙️
+- Registro de servicios Refit en MauiProgram.cs
+- Uso en ViewModels con ejemplos
+- Headers personalizados (autenticación)
+- Manejo de respuestas con ApiResponse
 
-9. **[09_Configuracion_Servicios.md](09_Configuracion_Servicios.md)** ⚙️ (11 KB)
-   - Registro de servicios Refit en MauiProgram.cs
-   - Opciones: Sin Polly, Con Polly, Con Factory personalizado
-   - Uso en ViewModels con ejemplos completos
-   - Headers personalizados (autenticación)
-   - Manejo de respuestas con ApiResponse
-   - Testing de servicios
-
-10. **[10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md)** 🚀 (11 KB)
-    - Guía rápida con la nueva estructura
-    - Ejemplo completo: crear módulo de Dispositivos
-    - Patrones de código comunes
-    - Próximos pasos recomendados
-    - Recursos adicionales
-
-11. **[11_Lista_Tareas.md](11_Lista_Tareas.md)** ✅ (4 KB)
-    - Checklist de tareas completadas
-    - Configuración básica pendiente
-    - Features a desarrollar
-    - Mejoras adicionales (SQLite, Logging, Testing, etc.)
-    - Próximo paso inmediato
+**[10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md)** 🚀
+- Guía rápida con ejemplos
+- Patrones de código comunes
+- Recursos adicionales
 
 ### 🆕 Referencias Rápidas
 
-12. **[CHEATSHEET.md](CHEATSHEET.md)** 📋 **NUEVO**
-    - Referencia rápida todo-en-uno
-    - Templates de código listo para copiar
-    - Comandos Git más usados
-    - Soluciones a errores comunes
-    - Snippets de ViewModel y XAML
-    - Tips y trucos útiles
+**[CHEATSHEET.md](CHEATSHEET.md)** 📋
+- Referencia rápida todo-en-uno
+- Templates de código listo para copiar
+- Comandos Git más usados
+- Soluciones a errores comunes
+- Snippets de ViewModel y XAML
 
 ---
 
@@ -157,27 +130,19 @@ Docs/
 
 ## 🎯 Flujo de Lectura Recomendado
 
-### Para Nuevos Miembros del Equipo
+### Para Nuevos Desarrolladores
 
-1. Lee **01_Introduccion.md** - Entiende el contexto (5 min)
-2. Lee **02_Empezar_Aqui.md** - Configura tu entorno (10 min)
-3. Lee **08_Arquitectura.md** - Entiende la nueva estructura (15 min)
-4. Lee **03_Tu_Tarea.md** - Identifica tu tarea (5 min)
-5. Lee **10_Guia_Inicio_Rapido.md** - Ve ejemplos de código (10 min)
-6. Empieza a desarrollar tu feature
+1. **02_Empezar_Aqui.md** - Configura tu entorno (10 min)
+2. **08_Arquitectura.md** - Entiende la estructura (10 min)
+3. **10_Guia_Inicio_Rapido.md** - Ve ejemplos de código (10 min)
+4. Empieza a desarrollar
 
 ### Para Desarrollo Diario
 
-- **Referencia rápida:** 05_Guia_Rapida_API.md
+- **Referencia rápida:** CHEATSHEET.md
 - **Problemas:** 06_Solucion_Problemas.md
 - **Commits:** 07_Como_Hacer_Commits.md
 - **Setup APIs:** 09_Configuracion_Servicios.md
-
-### Para Arquitectura y Patrones
-
-- **Estructura del proyecto:** 08_Arquitectura.md
-- **Agregar features:** 10_Guia_Inicio_Rapido.md (Sección "Agregar una Nueva Característica")
-- **Configurar servicios:** 09_Configuracion_Servicios.md
 
 ---
 
@@ -186,18 +151,16 @@ Docs/
 <details>
 <summary><b>📋 ¿Qué necesitas hacer?</b> (Click para expandir)</summary>
 
-| Necesito... | Documento | Tiempo |
-|-------------|-----------|---------|
-| **Configurar el proyecto desde cero** | [02_Empezar_Aqui.md](02_Empezar_Aqui.md) | 10 min |
-| **Crear un nuevo módulo/feature** | [08_Arquitectura.md](08_Arquitectura.md) + [10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md) | 15 min |
-| **Usar servicios API con Refit** | [09_Configuracion_Servicios.md](09_Configuracion_Servicios.md) | 10 min |
-| **Solucionar un error** | [06_Solucion_Problemas.md](06_Solucion_Problemas.md) | 5 min |
-| **Hacer commits correctos** | [07_Como_Hacer_Commits.md](07_Como_Hacer_Commits.md) | 5 min |
-| **Ver ejemplos de código XAML** | [04_Ejemplos_Visuales.md](04_Ejemplos_Visuales.md) | 10 min |
-| **Entender la arquitectura** | [08_Arquitectura.md](08_Arquitectura.md) | 10 min |
-| **Ver tareas pendientes** | [11_Lista_Tareas.md](11_Lista_Tareas.md) | 3 min |
-| **Probar endpoints de API** | [Postman/](Postman/) | 5 min |
-| **Crear un ViewModel** | [10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md) | 15 min |
+| Necesito... | Documento |
+|-------------|-----------|
+| **Configurar el proyecto** | [02_Empezar_Aqui.md](02_Empezar_Aqui.md) |
+| **Crear un módulo/feature** | [10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md) |
+| **Usar servicios API con Refit** | [09_Configuracion_Servicios.md](09_Configuracion_Servicios.md) |
+| **Solucionar un error** | [06_Solucion_Problemas.md](06_Solucion_Problemas.md) |
+| **Hacer commits correctos** | [07_Como_Hacer_Commits.md](07_Como_Hacer_Commits.md) |
+| **Ver ejemplos de código** | [04_Ejemplos_Visuales.md](04_Ejemplos_Visuales.md) |
+| **Entender la arquitectura** | [08_Arquitectura.md](08_Arquitectura.md) |
+| **Probar endpoints de API** | [Postman/](Postman/) |
 
 </details>
 
@@ -261,25 +224,14 @@ Ver más en: [10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md)
 
 ## 📌 Notas Importantes
 
-### ⚠️ Cambios Recientes (11/11/2025)
+### ⚠️ Arquitectura del Proyecto
 
-El proyecto fue reorganizado con **Feature-based Architecture**:
+El proyecto utiliza **Feature-based Architecture**:
 
-- ✅ Las Views y ViewModels ahora van juntos en `Features/{NombreModulo}/`
+- ✅ Views y ViewModels organizados en `Features/{NombreModulo}/`
 - ✅ Servicios organizados por categoría en `Services/{Http|Api|Storage|Navigation}/`
 - ✅ Core components en `Core/{ViewModels|Converters|Behaviors}/`
 - ✅ Constants centralizados en `Constants/`
-
-**Documentos actualizados:**
-- 02_Empezar_Aqui.md - Ejemplos con nueva estructura
-- 03_Tu_Tarea.md - Ubicaciones actualizadas
-- README.md (raíz) - Estructura actualizada
-
-**Nuevos documentos:**
-- 08_Arquitectura.md
-- 09_Configuracion_Servicios.md
-- 10_Guia_Inicio_Rapido.md
-- 11_Lista_Tareas.md
 
 ---
 
@@ -292,6 +244,6 @@ El proyecto fue reorganizado con **Feature-based Architecture**:
 
 ---
 
-**Última actualización:** 11/11/2025 - Documentación completa reorganizada
+**Última actualización:** Noviembre 2025
 
-**Volver a:** [README principal](../README.md)
+**[⬆ Volver al README principal](../README.md)**

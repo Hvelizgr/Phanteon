@@ -1,5 +1,9 @@
 namespace Phanteon.Models
 {
+    /// <summary>
+    /// Modelo de dispositivo IoT
+    /// Contiene información técnica y ubicación del dispositivo
+    /// </summary>
     public class Dispositivo
     {
         public int IdDispositivo { get; set; }
@@ -10,7 +14,7 @@ namespace Phanteon.Models
         public double Latitud { get; set; }
         public double Longitud { get; set; }
         public DateTime Registro { get; set; }
-        public string Activo { get; set; } = null!;
+        public string Activo { get; set; } = null!; // "S" o "N"
         public DateTime UltimaVista { get; set; }
     }
 }
