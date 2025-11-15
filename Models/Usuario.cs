@@ -1,5 +1,9 @@
 namespace Phanteon.Models
 {
+    /// <summary>
+    /// Modelo de usuario del sistema
+    /// Sincronizado con la API externa
+    /// </summary>
     public class Usuario
     {
         public int IdUsuario { get; set; }

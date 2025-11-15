@@ -1,8 +1,8 @@
 # Configuración de Servicios API
 
-## Registro de Servicios Refit en MauiProgram.cs
+## Registro de Servicios Refit
 
-### Opción 1: Sin Polly (Sin reintentos automáticos)
+### Opción 1: Básico (Sin reintentos)
 
 ```csharp
 using Phanteon.Services.Api;
@@ -34,7 +34,7 @@ builder.Services.AddRefitClient<IAlertasApi>()
     });
 ```
 
-### Opción 2: Con Polly (Recomendado - Con reintentos y resiliencia)
+### Opción 2: Con Polly (Recomendado)
 
 ```csharp
 using Phanteon.Services.Api;
@@ -79,7 +79,7 @@ builder.Services.AddRefitClient<IAlertasApi>()
     .AddPolicyHandler(retryPolicy);
 ```
 
-### Opción 3: Con Factory Personalizado (Máximo control)
+### Opción 3: Con Factory Personalizado
 
 ```csharp
 using Phanteon.Services.Api;
@@ -351,29 +351,6 @@ else
 }
 ```
 
-## Testing de Servicios
+---
 
-```csharp
-// Para testing, puedes crear mocks de las interfaces:
-
-public class MockDispositivosApi : IDispositivosApi
-{
-    public Task<List<Dispositivo>> GetDispositivosAsync()
-    {
-        return Task.FromResult(new List<Dispositivo>
-        {
-            new Dispositivo { Id = 1, Nombre = "Dispositivo 1" },
-            new Dispositivo { Id = 2, Nombre = "Dispositivo 2" }
-        });
-    }
-
-    // Implementar otros métodos...
-}
-
-// Registrar en MauiProgram.cs para testing:
-#if DEBUG
-builder.Services.AddSingleton<IDispositivosApi, MockDispositivosApi>();
-#else
-builder.Services.AddRefitClient<IDispositivosApi>()...
-#endif
-```
+**Última actualización:** Noviembre 2025

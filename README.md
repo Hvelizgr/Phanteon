@@ -96,33 +96,29 @@ Phanteon/
 ### 🟢 Esenciales (Empieza aquí)
 | Documento | Descripción | Tiempo |
 |-----------|-------------|---------|
-| **[02_Empezar_Aqui.md](Docs/02_Empezar_Aqui.md)** ⚡ | Setup completo en 5 minutos | 10 min |
+| **[02_Empezar_Aqui.md](Docs/02_Empezar_Aqui.md)** ⚡ | Guía de configuración | 10 min |
 | **[08_Arquitectura.md](Docs/08_Arquitectura.md)** 📐 | Estructura del proyecto | 10 min |
 | **[CHEATSHEET.md](Docs/CHEATSHEET.md)** 📋 | Referencia rápida todo-en-uno | 5 min |
-| **[03_Tu_Tarea.md](Docs/03_Tu_Tarea.md)** | Tu asignación específica | 5 min |
 
 ### 📖 Documentación Completa
 
 <details>
-<summary><b>Fundamentos (1-7)</b></summary>
+<summary><b>Documentación de Desarrollo</b></summary>
 
-1. **[01_Introduccion.md](Docs/01_Introduccion.md)** - Contexto del proyecto
-2. **[02_Empezar_Aqui.md](Docs/02_Empezar_Aqui.md)** - ⚡ Guía de inicio rápido
-3. **[03_Tu_Tarea.md](Docs/03_Tu_Tarea.md)** - División de tareas del equipo
-4. **[04_Ejemplos_Visuales.md](Docs/04_Ejemplos_Visuales.md)** - Mockups y código de ejemplo
-5. **[05_Guia_Rapida_API.md](Docs/05_Guia_Rapida_API.md)** - Comandos y bindings XAML
-6. **[06_Solucion_Problemas.md](Docs/06_Solucion_Problemas.md)** - Errores comunes y soluciones
-7. **[07_Como_Hacer_Commits.md](Docs/07_Como_Hacer_Commits.md)** - Guía de Git y workflow
+- **[02_Empezar_Aqui.md](Docs/02_Empezar_Aqui.md)** - Guía de configuración inicial
+- **[04_Ejemplos_Visuales.md](Docs/04_Ejemplos_Visuales.md)** - Mockups y código de ejemplo
+- **[05_Guia_Rapida_API.md](Docs/05_Guia_Rapida_API.md)** - Comandos y bindings XAML
+- **[06_Solucion_Problemas.md](Docs/06_Solucion_Problemas.md)** - Errores comunes y soluciones
+- **[07_Como_Hacer_Commits.md](Docs/07_Como_Hacer_Commits.md)** - Guía de Git y workflow
 
 </details>
 
 <details>
-<summary><b>Arquitectura Avanzada (8-11)</b></summary>
+<summary><b>Arquitectura y Servicios</b></summary>
 
-8. **[08_Arquitectura.md](Docs/08_Arquitectura.md)** - 📐 Arquitectura Feature-based completa
-9. **[09_Configuracion_Servicios.md](Docs/09_Configuracion_Servicios.md)** - ⚙️ Setup de APIs con Refit
-10. **[10_Guia_Inicio_Rapido.md](Docs/10_Guia_Inicio_Rapido.md)** - 🚀 Guía práctica con ejemplos
-11. **[11_Lista_Tareas.md](Docs/11_Lista_Tareas.md)** - ✅ Checklist de tareas pendientes
+- **[08_Arquitectura.md](Docs/08_Arquitectura.md)** - Arquitectura Feature-based completa
+- **[09_Configuracion_Servicios.md](Docs/09_Configuracion_Servicios.md)** - Setup de APIs con Refit
+- **[10_Guia_Inicio_Rapido.md](Docs/10_Guia_Inicio_Rapido.md)** - Guía práctica con ejemplos
 
 </details>
 
@@ -223,17 +219,7 @@ El proyecto incluye `TestConexionApiViewModel.cs` que sirve ÚNICAMENTE para ver
 
 ## 👥 Equipo de Desarrollo
 
-- **Héctor Eduardo Véliz Girón** (000108304) - Lead Developer & Infrastructure
-- 3 desarrolladores adicionales (Ver [03_Tu_Tarea.md](Docs/03_Tu_Tarea.md))
-
-### División de Trabajo (Actualizado - Feature-based)
-
-Cada miembro trabaja en su propia carpeta Feature:
-
-- **Héctor:** `Features/Auth/` - LoginPage + LoginViewModel
-- **Persona 1:** `Features/Alertas/` - AlertasPage + AlertasViewModel
-- **Persona 2:** `Features/Dispositivos/DispositivoDetail/` - Detalle de dispositivo
-- **Persona 3:** `Features/Dispositivos/DispositivosList/` - Lista + Navegación
+Proyecto desarrollado como parte de un curso académico de desarrollo de aplicaciones móviles.
 
 ## 📦 Paquetes NuGet Principales
 
@@ -659,12 +645,7 @@ Ver ejemplos: [Docs/10_Guia_Inicio_Rapido.md](Docs/10_Guia_Inicio_Rapido.md)
 3. Pregunta en el chat del equipo
 
 ### Para Problemas con el Backend (DevicesAPI)
-- Contacta a **@epinto17** (Erick Pinto)
 - Repositorio: https://github.com/epinto17/DevicesAPI
-
-### Equipo del Proyecto
-- **Héctor Eduardo Véliz Girón** - Lead Developer
-- Ver equipo completo en [Docs/03_Tu_Tarea.md](Docs/03_Tu_Tarea.md)
 
 ---
 
@@ -676,7 +657,7 @@ Este proyecto es académico y se usa únicamente con fines educativos.
 
 <div align="center">
 
-**Última actualización:** 14 de noviembre de 2025
+**Última actualización:** Noviembre 2025
 
 **[⬆ Volver arriba](#phanteon)**
 

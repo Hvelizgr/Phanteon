@@ -1,5 +1,9 @@
 namespace Phanteon.Models
 {
+    /// <summary>
+    /// Modelo de historial de eventos de dispositivo
+    /// Almacena lecturas de sensores y eventos del dispositivo
+    /// </summary>
     public class HistorialDispositivo
     {
         public int IdHistorialDispositivo { get; set; }

@@ -3,9 +3,8 @@
 namespace Phanteon
 {
     /// <summary>
-    /// Aplicación principal
-    /// (DIP: Depende de abstracción IStartupNavigationService en lugar de lógica concreta)
-    /// (SRP: Solo se encarga de inicializar la aplicación, delega navegación a servicio especializado)
+    /// Aplicación principal MAUI
+    /// Maneja la inicialización y navegación inicial basada en sesión del usuario
     /// </summary>
     public partial class App : Application
     {
