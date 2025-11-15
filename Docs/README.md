@@ -1,10 +1,31 @@
-# 📚 Índice de Documentación - Phanteon
+# 📚 Documentación Phanteon
 
-Bienvenido a la documentación del proyecto Phanteon. Lee los documentos en el orden recomendado.
+> Guía completa para desarrolladores del proyecto Phanteon - Sistema de monitoreo IoT
 
-## 🚀 Por Dónde Empezar
+<div align="center">
 
-Si eres nuevo en el proyecto, comienza aquí:
+![Status](https://img.shields.io/badge/Status-En%20Desarrollo-yellow)
+![Docs](https://img.shields.io/badge/Docs-11%20archivos-blue)
+![Last Update](https://img.shields.io/badge/Última%20actualización-14%2F11%2F2025-green)
+
+</div>
+
+---
+
+## 🎯 Inicio Rápido
+
+**¿Primera vez en el proyecto?** Sigue esta ruta de 30 minutos:
+
+1. **[01_Introduccion.md](01_Introduccion.md)** (5 min) → Contexto general
+2. **[02_Empezar_Aqui.md](02_Empezar_Aqui.md)** (10 min) → ⚡ Setup completo
+3. **[08_Arquitectura.md](08_Arquitectura.md)** (10 min) → Estructura del proyecto
+4. **[03_Tu_Tarea.md](03_Tu_Tarea.md)** (5 min) → Tu asignación específica
+
+---
+
+## 📖 Índice Completo
+
+### 🟢 Fundamentos (Empieza aquí)
 
 1. **[01_Introduccion.md](01_Introduccion.md)** (11 KB)
    - Contexto del proyecto
@@ -85,6 +106,16 @@ Si eres nuevo en el proyecto, comienza aquí:
     - Mejoras adicionales (SQLite, Logging, Testing, etc.)
     - Próximo paso inmediato
 
+### 🆕 Referencias Rápidas
+
+12. **[CHEATSHEET.md](CHEATSHEET.md)** 📋 **NUEVO**
+    - Referencia rápida todo-en-uno
+    - Templates de código listo para copiar
+    - Comandos Git más usados
+    - Soluciones a errores comunes
+    - Snippets de ViewModel y XAML
+    - Tips y trucos útiles
+
 ---
 
 ## 🧪 Testing
@@ -152,19 +183,79 @@ Docs/
 
 ## 🔍 Búsqueda Rápida
 
-### Necesitas saber cómo...
+<details>
+<summary><b>📋 ¿Qué necesitas hacer?</b> (Click para expandir)</summary>
 
-| Qué necesitas | Dónde encontrarlo |
-|--------------|-------------------|
-| Configurar el proyecto desde cero | 02_Empezar_Aqui.md |
-| Crear un nuevo módulo/feature | 08_Arquitectura.md + 10_Guia_Inicio_Rapido.md |
-| Usar servicios API con Refit | 09_Configuracion_Servicios.md |
-| Solucionar error de compilación | 06_Solucion_Problemas.md |
-| Hacer commits correctamente | 07_Como_Hacer_Commits.md |
-| Ver ejemplos de código XAML | 04_Ejemplos_Visuales.md + 05_Guia_Rapida_API.md |
-| Entender la arquitectura | 08_Arquitectura.md |
-| Ver qué falta por hacer | 11_Lista_Tareas.md + 03_Tu_Tarea.md |
-| Probar la API | Postman/ |
+| Necesito... | Documento | Tiempo |
+|-------------|-----------|---------|
+| **Configurar el proyecto desde cero** | [02_Empezar_Aqui.md](02_Empezar_Aqui.md) | 10 min |
+| **Crear un nuevo módulo/feature** | [08_Arquitectura.md](08_Arquitectura.md) + [10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md) | 15 min |
+| **Usar servicios API con Refit** | [09_Configuracion_Servicios.md](09_Configuracion_Servicios.md) | 10 min |
+| **Solucionar un error** | [06_Solucion_Problemas.md](06_Solucion_Problemas.md) | 5 min |
+| **Hacer commits correctos** | [07_Como_Hacer_Commits.md](07_Como_Hacer_Commits.md) | 5 min |
+| **Ver ejemplos de código XAML** | [04_Ejemplos_Visuales.md](04_Ejemplos_Visuales.md) | 10 min |
+| **Entender la arquitectura** | [08_Arquitectura.md](08_Arquitectura.md) | 10 min |
+| **Ver tareas pendientes** | [11_Lista_Tareas.md](11_Lista_Tareas.md) | 3 min |
+| **Probar endpoints de API** | [Postman/](Postman/) | 5 min |
+| **Crear un ViewModel** | [10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md) | 15 min |
+
+</details>
+
+<details>
+<summary><b>🐛 Errores Comunes</b></summary>
+
+| Error | Solución Rápida | Documento |
+|-------|----------------|-----------|
+| `Connection refused` | Verificar que DevicesAPI esté corriendo | [06_Solucion_Problemas.md](06_Solucion_Problemas.md#-error-connection-refused) |
+| `Cannot resolve service` | Registrar en MauiProgram.cs | [06_Solucion_Problemas.md](06_Solucion_Problemas.md#-error-cannot-resolve-service) |
+| `ObservableProperty not found` | Agregar `using CommunityToolkit.Mvvm` | [06_Solucion_Problemas.md](06_Solucion_Problemas.md#-error-observableproperty) |
+| `SSL Certificate failed` | Ya solucionado en MauiProgram.cs | [06_Solucion_Problemas.md](06_Solucion_Problemas.md#-error-ssl-certificate) |
+| `Timeout` | Aumentar timeout o verificar backend | [06_Solucion_Problemas.md](06_Solucion_Problemas.md#-error-timeout) |
+
+</details>
+
+<details>
+<summary><b>💡 Snippets Útiles</b></summary>
+
+### Crear un nuevo ViewModel
+```csharp
+public partial class MiViewModel : BaseViewModel
+{
+    private readonly IMiApi _api;
+
+    public MiViewModel(IMiApi api)
+    {
+        _api = api;
+        Titulo = "Mi Título";
+    }
+
+    [ObservableProperty]
+    private ObservableCollection<MiModelo> items = new();
+
+    [RelayCommand]
+    private async Task CargarAsync()
+    {
+        try
+        {
+            EstaCargando = true;
+            var data = await _api.GetAsync();
+            Items = new(data);
+        }
+        catch (Exception ex)
+        {
+            ManejarError(ex, "cargar datos");
+        }
+        finally
+        {
+            EstaCargando = false;
+        }
+    }
+}
+```
+
+Ver más en: [10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md)
+
+</details>
 
 ---
 
