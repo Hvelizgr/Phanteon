@@ -1,35 +1,58 @@
-﻿using Phanteon.Services.Storage;
+﻿using Phanteon.Services.Navigation;
 
 namespace Phanteon
 {
+    /// <summary>
+    /// Aplicación principal
+    /// (DIP: Depende de abstracción IStartupNavigationService en lugar de lógica concreta)
+    /// (SRP: Solo se encarga de inicializar la aplicación, delega navegación a servicio especializado)
+    /// </summary>
     public partial class App : Application
     {
-        private readonly ISecureStorageService _secureStorageService;
+        private readonly IStartupNavigationService _startupNavigationService;
 
-        public App(ISecureStorageService secureStorageService)
+        public App(IStartupNavigationService startupNavigationService)
         {
             InitializeComponent();
-            _secureStorageService = secureStorageService;
+            _startupNavigationService = startupNavigationService;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            var shell = new AppShell();
+            return new Window(new AppShell());
+        }
 
-            // Verificar si hay un usuario logueado
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            // Navegación inicial con verificación de sesión
             Task.Run(async () =>
             {
-                var userId = await _secureStorageService.GetAsync("user_id");
-
-                // Si hay un usuario logueado, navegar a Main
-                if (!string.IsNullOrEmpty(userId))
+                try
                 {
-                    await shell.GoToAsync("//Main");
-                }
-                // Si no, se queda en Login (página inicial del Shell)
-            });
+                    await Task.Delay(500);
 
-            return new Window(shell);
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        try
+                        {
+                            if (Windows.Count > 0 && Windows[0].Page is Shell shell)
+                            {
+                                await _startupNavigationService.NavigateToInitialPageAsync(shell);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error navegando: {ex}");
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error en inicialización: {ex}");
+                }
+            });
         }
     }
 }

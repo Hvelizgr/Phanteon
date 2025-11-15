@@ -4,16 +4,27 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Phanteon"
-    xmlns:main="clr-namespace:Phanteon.Features.Main"
-    xmlns:auth="clr-namespace:Phanteon.Features.Auth"
+    xmlns:main="clr-namespace:Phanteon.Features.Main.Views"
+    xmlns:auth="clr-namespace:Phanteon.Features.Auth.Views"
     Title="Phanteon"
     Shell.FlyoutBehavior="Disabled">
 
-    <!-- Página de Login (inicial) -->
-    <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate auth:LoginPage}"
-        Route="Login" />
+    <TabBar>
+        <!-- Página de Login (inicial) -->
+        <ShellContent
+            Title="Login"
+            ContentTemplate="{DataTemplate auth:LoginPage}"
+            Route="Login">
+        </ShellContent>
+
+        <!-- Página Principal (Main) -->
+        <ShellContent
+            Title="Inicio"
+            ContentTemplate="{DataTemplate main:MainPage}"
+            Route="Main"
+            IsVisible="False">
+        </ShellContent>
+    </TabBar>
 
     <!-- Las siguientes páginas están ocultas del Shell y solo se accede por navegación -->
 
