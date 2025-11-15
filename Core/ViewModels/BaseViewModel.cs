@@ -9,7 +9,7 @@ namespace Phanteon.Core.ViewModels
     {
         /// <summary>
         /// Indicador de si el ViewModel está ejecutando una operación
-        /// Usar en XAML: IsRunning="{Binding EstaCargando}"
+        /// Usar en XAML: IsRunning="{Bindin*g EstaCargando}"
         /// </summary>
         [ObservableProperty]
         private bool estaCargando;

@@ -64,15 +64,13 @@ namespace Phanteon.Features.Alertas.ViewModels
 
             try
             {
-                List<Alerta> alertas;
+                // Obtener todas las alertas desde la API
+                var alertas = await _alertasApi.GetAlertasAsync();
 
+                // Filtrar por dispositivo si se especificó un ID
                 if (DispositivoId.HasValue && DispositivoId.Value > 0)
                 {
-                    alertas = await _alertasApi.GetAlertasPorDispositivoAsync(DispositivoId.Value);
-                }
-                else
-                {
-                    alertas = await _alertasApi.GetAlertasAsync();
+                    alertas = alertas.Where(a => a.IdDispositivo == DispositivoId.Value).ToList();
                 }
 
                 _todasLasAlertas = alertas.OrderByDescending(a => a.MarcaTiempo).ToList();

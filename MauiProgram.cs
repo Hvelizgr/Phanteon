@@ -55,6 +55,9 @@ namespace Phanteon
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<IStartupNavigationService, StartupNavigationService>();
 
+            // Handler para agregar token de autenticación automáticamente
+            builder.Services.AddTransient<AuthHeaderHandler>();
+
             // ViewModels - Transient para nueva instancia cada vez
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<LoginViewModel>();
@@ -79,21 +82,24 @@ namespace Phanteon
                 {
                     c.BaseAddress = new Uri(ApiConfiguration.BaseUrl);
                     c.Timeout = ApiConfiguration.Timeout;
-                });
+                })
+                .AddHttpMessageHandler<AuthHeaderHandler>();
 
             builder.Services.AddRefitClient<IUsuariosApi>()
                 .ConfigureHttpClient(c =>
                 {
                     c.BaseAddress = new Uri(ApiConfiguration.BaseUrl);
                     c.Timeout = ApiConfiguration.Timeout;
-                });
+                })
+                .AddHttpMessageHandler<AuthHeaderHandler>();
 
             builder.Services.AddRefitClient<IAlertasApi>()
                 .ConfigureHttpClient(c =>
                 {
                     c.BaseAddress = new Uri(ApiConfiguration.BaseUrl);
                     c.Timeout = ApiConfiguration.Timeout;
-                });
+                })
+                .AddHttpMessageHandler<AuthHeaderHandler>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
