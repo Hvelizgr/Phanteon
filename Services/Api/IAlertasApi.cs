@@ -11,35 +11,35 @@ namespace Phanteon.Services.Api
         /// <summary>
         /// Obtiene todas las alertas
         /// </summary>
-        [Get("/api/alertas")]
+        [Get("/api/alertas/getall")]
         Task<List<Alerta>> GetAlertasAsync();
 
         /// <summary>
-        /// Obtiene alertas por dispositivo
+        /// Obtiene alertas por dispositivo (filtrando en el cliente)
         /// </summary>
-        [Get("/api/alertas/dispositivo/{dispositivoId}")]
+        [Get("/api/alertas/getall")]
         Task<List<Alerta>> GetAlertasPorDispositivoAsync(int dispositivoId);
 
         /// <summary>
         /// Obtiene una alerta por ID
         /// </summary>
-        [Get("/api/alertas/{id}")]
+        [Get("/api/alertas/getbyid/{id}")]
         Task<Alerta> GetAlertaAsync(int id);
 
         /// <summary>
         /// Crea una nueva alerta
         /// </summary>
-        [Post("/api/alertas")]
+        [Post("/api/alertas/post")]
         Task<Alerta> CreateAlertaAsync([Body] Alerta alerta);
 
         /// <summary>
-        /// Marca una alerta como leída
+        /// Marca una alerta como leída (no implementado en backend aún)
         /// </summary>
         [Put("/api/alertas/{id}/marcar-leida")]
         Task MarcarAlertaLeidaAsync(int id);
 
         /// <summary>
-        /// Elimina una alerta
+        /// Elimina una alerta (no implementado en backend aún)
         /// </summary>
         [Delete("/api/alertas/{id}")]
         Task DeleteAlertaAsync(int id);
