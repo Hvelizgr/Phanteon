@@ -96,8 +96,8 @@ Phanteon/
 ### 🟢 Esenciales (Empieza aquí)
 | Documento | Descripción | Tiempo |
 |-----------|-------------|---------|
-| **[02_Empezar_Aqui.md](Docs/02_Empezar_Aqui.md)** ⚡ | Guía de configuración | 10 min |
-| **[08_Arquitectura.md](Docs/08_Arquitectura.md)** 📐 | Estructura del proyecto | 10 min |
+| **[01_Empezar_Aqui.md](Docs/01_Empezar_Aqui.md)** ⚡ | Guía de configuración | 10 min |
+| **[06_Arquitectura.md](Docs/06_Arquitectura.md)** 📐 | Estructura del proyecto | 10 min |
 | **[CHEATSHEET.md](Docs/CHEATSHEET.md)** 📋 | Referencia rápida todo-en-uno | 5 min |
 
 ### 📖 Documentación Completa
@@ -105,20 +105,20 @@ Phanteon/
 <details>
 <summary><b>Documentación de Desarrollo</b></summary>
 
-- **[02_Empezar_Aqui.md](Docs/02_Empezar_Aqui.md)** - Guía de configuración inicial
-- **[04_Ejemplos_Visuales.md](Docs/04_Ejemplos_Visuales.md)** - Mockups y código de ejemplo
-- **[05_Guia_Rapida_API.md](Docs/05_Guia_Rapida_API.md)** - Comandos y bindings XAML
-- **[06_Solucion_Problemas.md](Docs/06_Solucion_Problemas.md)** - Errores comunes y soluciones
-- **[07_Como_Hacer_Commits.md](Docs/07_Como_Hacer_Commits.md)** - Guía de Git y workflow
+- **[01_Empezar_Aqui.md](Docs/01_Empezar_Aqui.md)** - Guía de configuración inicial
+- **[02_Ejemplos_Visuales.md](Docs/02_Ejemplos_Visuales.md)** - Mockups y código de ejemplo
+- **[03_Guia_Rapida_API.md](Docs/03_Guia_Rapida_API.md)** - Comandos y bindings XAML
+- **[04_Solucion_Problemas.md](Docs/04_Solucion_Problemas.md)** - Errores comunes y soluciones
+- **[05_Como_Hacer_Commits.md](Docs/05_Como_Hacer_Commits.md)** - Guía de Git y workflow
 
 </details>
 
 <details>
 <summary><b>Arquitectura y Servicios</b></summary>
 
-- **[08_Arquitectura.md](Docs/08_Arquitectura.md)** - Arquitectura Feature-based completa
-- **[09_Configuracion_Servicios.md](Docs/09_Configuracion_Servicios.md)** - Setup de APIs con Refit
-- **[10_Guia_Inicio_Rapido.md](Docs/10_Guia_Inicio_Rapido.md)** - Guía práctica con ejemplos
+- **[06_Arquitectura.md](Docs/06_Arquitectura.md)** - Arquitectura Feature-based completa
+- **[07_Configuracion_Servicios.md](Docs/07_Configuracion_Servicios.md)** - Setup de APIs con Refit
+- **[08_Guia_Inicio_Rapido.md](Docs/08_Guia_Inicio_Rapido.md)** - Guía práctica con ejemplos
 
 </details>
 
