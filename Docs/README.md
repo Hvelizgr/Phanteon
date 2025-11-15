@@ -16,8 +16,8 @@
 
 **¿Primera vez en el proyecto?** Sigue esta ruta de 20 minutos:
 
-1. **[02_Empezar_Aqui.md](02_Empezar_Aqui.md)** (10 min) → Configuración inicial
-2. **[08_Arquitectura.md](08_Arquitectura.md)** (10 min) → Estructura del proyecto
+1. **[01_Empezar_Aqui.md](01_Empezar_Aqui.md)** (10 min) → Configuración inicial
+2. **[06_Arquitectura.md](06_Arquitectura.md)** (10 min) → Estructura del proyecto
 
 ---
 
@@ -25,7 +25,7 @@
 
 ### 🟢 Fundamentos (Empieza aquí)
 
-**[02_Empezar_Aqui.md](02_Empezar_Aqui.md)** ⚡ **EMPIEZA AQUÍ**
+**[01_Empezar_Aqui.md](01_Empezar_Aqui.md)** ⚡ **EMPIEZA AQUÍ**
 - Guía de configuración inicial
 - Setup del entorno
 - Configuración de la API
@@ -36,24 +36,24 @@
 
 ### Ejemplos y Guías
 
-4. **[04_Ejemplos_Visuales.md](04_Ejemplos_Visuales.md)** (22 KB)
+2. **[02_Ejemplos_Visuales.md](02_Ejemplos_Visuales.md)**
    - Mockups de las pantallas
    - Código de ejemplo completo
    - Diseños visuales
 
-5. **[05_Guia_Rapida_API.md](05_Guia_Rapida_API.md)** (11 KB)
+3. **[03_Guia_Rapida_API.md](03_Guia_Rapida_API.md)**
    - Referencia rápida de comandos
    - Bindings XAML
    - Snippets útiles
 
 ### Solución de Problemas
 
-6. **[06_Solucion_Problemas.md](06_Solucion_Problemas.md)** (12 KB)
+4. **[04_Solucion_Problemas.md](04_Solucion_Problemas.md)**
    - Errores comunes
    - Soluciones paso a paso
    - Troubleshooting
 
-7. **[07_Como_Hacer_Commits.md](07_Como_Hacer_Commits.md)** (17 KB)
+5. **[05_Como_Hacer_Commits.md](05_Como_Hacer_Commits.md)**
    - Convenciones de Git
    - Mensajes de commit
    - Flujo de trabajo con ramas
@@ -62,23 +62,23 @@
 
 ## ⭐ Arquitectura y Patrones
 
-**[08_Arquitectura.md](08_Arquitectura.md)** 📐
-- Feature-based Architecture completa
-- Patrones y principios (MVVM, DI, etc.)
-- Estructura de carpetas detallada
-- Convenciones de nomenclatura
-- Buenas prácticas
+6. **[06_Arquitectura.md](06_Arquitectura.md)** 📐
+   - Feature-based Architecture completa
+   - Patrones y principios (MVVM, DI, etc.)
+   - Estructura de carpetas detallada
+   - Convenciones de nomenclatura
+   - Buenas prácticas
 
-**[09_Configuracion_Servicios.md](09_Configuracion_Servicios.md)** ⚙️
-- Registro de servicios Refit en MauiProgram.cs
-- Uso en ViewModels con ejemplos
-- Headers personalizados (autenticación)
-- Manejo de respuestas con ApiResponse
+7. **[07_Configuracion_Servicios.md](07_Configuracion_Servicios.md)** ⚙️
+   - Registro de servicios Refit en MauiProgram.cs
+   - Uso en ViewModels con ejemplos
+   - Headers personalizados (autenticación)
+   - Manejo de respuestas con ApiResponse
 
-**[10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md)** 🚀
-- Guía rápida con ejemplos
-- Patrones de código comunes
-- Recursos adicionales
+8. **[08_Guia_Inicio_Rapido.md](08_Guia_Inicio_Rapido.md)** 🚀
+   - Guía rápida con ejemplos
+   - Patrones de código comunes
+   - Recursos adicionales
 
 ### 🆕 Referencias Rápidas
 
@@ -132,17 +132,17 @@ Docs/
 
 ### Para Nuevos Desarrolladores
 
-1. **02_Empezar_Aqui.md** - Configura tu entorno (10 min)
-2. **08_Arquitectura.md** - Entiende la estructura (10 min)
-3. **10_Guia_Inicio_Rapido.md** - Ve ejemplos de código (10 min)
+1. **01_Empezar_Aqui.md** - Configura tu entorno (10 min)
+2. **06_Arquitectura.md** - Entiende la estructura (10 min)
+3. **08_Guia_Inicio_Rapido.md** - Ve ejemplos de código (10 min)
 4. Empieza a desarrollar
 
 ### Para Desarrollo Diario
 
 - **Referencia rápida:** CHEATSHEET.md
-- **Problemas:** 06_Solucion_Problemas.md
-- **Commits:** 07_Como_Hacer_Commits.md
-- **Setup APIs:** 09_Configuracion_Servicios.md
+- **Problemas:** 04_Solucion_Problemas.md
+- **Commits:** 05_Como_Hacer_Commits.md
+- **Setup APIs:** 07_Configuracion_Servicios.md
 
 ---
 
@@ -153,13 +153,13 @@ Docs/
 
 | Necesito... | Documento |
 |-------------|-----------|
-| **Configurar el proyecto** | [02_Empezar_Aqui.md](02_Empezar_Aqui.md) |
-| **Crear un módulo/feature** | [10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md) |
-| **Usar servicios API con Refit** | [09_Configuracion_Servicios.md](09_Configuracion_Servicios.md) |
-| **Solucionar un error** | [06_Solucion_Problemas.md](06_Solucion_Problemas.md) |
-| **Hacer commits correctos** | [07_Como_Hacer_Commits.md](07_Como_Hacer_Commits.md) |
-| **Ver ejemplos de código** | [04_Ejemplos_Visuales.md](04_Ejemplos_Visuales.md) |
-| **Entender la arquitectura** | [08_Arquitectura.md](08_Arquitectura.md) |
+| **Configurar el proyecto** | [01_Empezar_Aqui.md](01_Empezar_Aqui.md) |
+| **Crear un módulo/feature** | [08_Guia_Inicio_Rapido.md](08_Guia_Inicio_Rapido.md) |
+| **Usar servicios API con Refit** | [07_Configuracion_Servicios.md](07_Configuracion_Servicios.md) |
+| **Solucionar un error** | [04_Solucion_Problemas.md](04_Solucion_Problemas.md) |
+| **Hacer commits correctos** | [05_Como_Hacer_Commits.md](05_Como_Hacer_Commits.md) |
+| **Ver ejemplos de código** | [02_Ejemplos_Visuales.md](02_Ejemplos_Visuales.md) |
+| **Entender la arquitectura** | [06_Arquitectura.md](06_Arquitectura.md) |
 | **Probar endpoints de API** | [Postman/](Postman/) |
 
 </details>

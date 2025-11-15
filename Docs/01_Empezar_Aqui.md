@@ -107,7 +107,7 @@ Phanteon/
 └── Helpers/           # Utilidades
 ```
 
-Ver **[08_Arquitectura.md](08_Arquitectura.md)** para más detalles.
+Ver **[06_Arquitectura.md](06_Arquitectura.md)** para más detalles.
 
 ---
 
@@ -119,16 +119,16 @@ Ver **[08_Arquitectura.md](08_Arquitectura.md)** para más detalles.
 ### ❌ "Cannot resolve service"
 **Solución:** Verifica que el servicio esté registrado en `MauiProgram.cs`
 
-Ver **[06_Solucion_Problemas.md](06_Solucion_Problemas.md)** para más errores comunes.
+Ver **[04_Solucion_Problemas.md](04_Solucion_Problemas.md)** para más errores comunes.
 
 ---
 
 ## 📚 Documentos Relacionados
 
-- **[08_Arquitectura.md](08_Arquitectura.md)** - Arquitectura completa del proyecto
-- **[09_Configuracion_Servicios.md](09_Configuracion_Servicios.md)** - Setup de APIs con Refit
-- **[10_Guia_Inicio_Rapido.md](10_Guia_Inicio_Rapido.md)** - Guía rápida con ejemplos
-- **[06_Solucion_Problemas.md](06_Solucion_Problemas.md)** - Errores comunes y soluciones
+- **[06_Arquitectura.md](06_Arquitectura.md)** - Arquitectura completa del proyecto
+- **[07_Configuracion_Servicios.md](07_Configuracion_Servicios.md)** - Setup de APIs con Refit
+- **[08_Guia_Inicio_Rapido.md](08_Guia_Inicio_Rapido.md)** - Guía rápida con ejemplos
+- **[04_Solucion_Problemas.md](04_Solucion_Problemas.md)** - Errores comunes y soluciones
 
 ---
 
