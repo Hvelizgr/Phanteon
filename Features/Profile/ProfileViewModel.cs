@@ -89,10 +89,7 @@ namespace Phanteon.Features.Profile
         {
             try
             {
-                // Aquí puedes hacer llamadas a tu API para obtener las estadísticas reales
-                // Por ahora, usaremos datos de ejemplo basados en la fecha de registro
 
-                // Intenta obtener la fecha de registro desde el almacenamiento seguro
                 var registrationDateString = await _secureStorageService.GetAsync("RegistrationDate");
 
                 if (!string.IsNullOrEmpty(registrationDateString) && DateTime.TryParse(registrationDateString, out var registrationDate))
@@ -101,12 +98,10 @@ namespace Phanteon.Features.Profile
                 }
                 else
                 {
-                    // Si no existe, establece la fecha actual y guárdala
                     await _secureStorageService.SetAsync("RegistrationDate", DateTime.Now.ToString("O"));
                     DaysActive = 0;
                 }
 
-                // Datos de ejemplo para dispositivos y sesiones
                 // TODO: Reemplazar con datos reales de tu API
                 DevicesCount = 3;
                 SessionsCount = 24;
