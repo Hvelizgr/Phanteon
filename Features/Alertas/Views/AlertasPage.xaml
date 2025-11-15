@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:alertas="clr-namespace:Phanteon.Features.Alertas.ViewModels"
+             xmlns:models="clr-namespace:Phanteon.Models"
+             x:Class="Phanteon.Features.Alertas.Views.AlertasPage"
+             x:DataType="alertas:AlertasViewModel"
+             Title="Alertas"
+             BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#1A1A1A}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior>
+            <BackButtonBehavior.IconOverride>
+                <FontImageSource FontFamily="FontAwesomeSolid"
+                                Glyph="&#xF053;"
+                                Size="20"
+                                Color="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+            </BackButtonBehavior.IconOverride>
+        </BackButtonBehavior>
+    </Shell.BackButtonBehavior>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Header con estadísticas -->
+        <VerticalStackLayout Grid.Row="0" Padding="20" Spacing="15">
+
+            <!-- Título -->
+            <Label Text="Alertas del Sistema"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+
+            <!-- Estadísticas por severidad -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+
+                <!-- Alertas Altas -->
+                <Border Grid.Column="0"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#2A2A2A}"
+                        StrokeThickness="0"
+                        Padding="15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Offset="0,4" Radius="8" Opacity="0.08"/>
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <Border BackgroundColor="#F44336"
+                                StrokeThickness="0"
+                                Padding="8"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                HorizontalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Label Text="&#xF071;"
+                                   FontFamily="FontAwesomeSolid"
+                                   FontSize="18"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <Label Text="{Binding AlertasAltasCount}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+                        <Label Text="Alta"
+                               FontSize="11"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Alertas Medias -->
+                <Border Grid.Column="1"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#2A2A2A}"
+                        StrokeThickness="0"
+                        Padding="15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Offset="0,4" Radius="8" Opacity="0.08"/>
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <Border BackgroundColor="#FF9800"
+                                StrokeThickness="0"
+                                Padding="8"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                HorizontalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Label Text="&#xF06A;"
+                                   FontFamily="FontAwesomeSolid"
+                                   FontSize="18"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <Label Text="{Binding AlertasMediasCount}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+                        <Label Text="Media"
+                               FontSize="11"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Alertas Bajas -->
+                <Border Grid.Column="2"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#2A2A2A}"
+                        StrokeThickness="0"
+                        Padding="15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Offset="0,4" Radius="8" Opacity="0.08"/>
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <Border BackgroundColor="#4CAF50"
+                                StrokeThickness="0"
+                                Padding="8"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                HorizontalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Label Text="&#xF05A;"
+                                   FontFamily="FontAwesomeSolid"
+                                   FontSize="18"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <Label Text="{Binding AlertasBajasCount}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+                        <Label Text="Baja"
+                               FontSize="11"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+            <!-- Filtros de severidad -->
+            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                <HorizontalStackLayout Spacing="10">
+
+                    <Border Padding="15,8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.Background>
+                            <SolidColorBrush Color="{Binding FiltroSeveridad, Converter={StaticResource FiltroSelectedConverter}, ConverterParameter='Todas'}"/>
+                        </Border.Background>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FiltrarPorSeveridadCommand}" CommandParameter="Todas"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="Todas"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </Border>
+
+                    <Border Padding="15,8"
+                            BackgroundColor="#F44336">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FiltrarPorSeveridadCommand}" CommandParameter="Alta"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="Alta"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </Border>
+
+                    <Border Padding="15,8"
+                            BackgroundColor="#FF9800">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FiltrarPorSeveridadCommand}" CommandParameter="Media"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="Media"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </Border>
+
+                    <Border Padding="15,8"
+                            BackgroundColor="#4CAF50">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FiltrarPorSeveridadCommand}" CommandParameter="Baja"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="Baja"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </Border>
+
+                </HorizontalStackLayout>
+            </ScrollView>
+
+        </VerticalStackLayout>
+
+        <!-- Lista de alertas -->
+        <RefreshView Grid.Row="1"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshAlertasCommand}"
+                     RefreshColor="{StaticResource Primary}">
+
+            <CollectionView ItemsSource="{Binding Alertas}"
+                           SelectionMode="None"
+                           Margin="20,0,20,20">
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Spacing="15"
+                                        Padding="40">
+                        <Label Text="&#xF0F3;"
+                               FontFamily="FontAwesomeSolid"
+                               FontSize="60"
+                               TextColor="{AppThemeBinding Light=#CCCCCC, Dark=#555555}"
+                               HorizontalOptions="Center"/>
+                        <Label Text="No hay alertas"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"/>
+                        <Label Text="Todo está funcionando correctamente"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#CCCCCC, Dark=#555555}"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Alerta">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Eliminar"
+                                              BackgroundColor="#F44336"
+                                              Command="{Binding Source={RelativeSource AncestorType={x:Type alertas:AlertasViewModel}}, Path=EliminarAlertaCommand}"
+                                              CommandParameter="{Binding .}"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2A2A2A}"
+                                    StrokeThickness="0"
+                                    Padding="20"
+                                    Margin="0,0,0,12">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="15"/>
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="#000000" Offset="0,4" Radius="10" Opacity="0.08"/>
+                                </Border.Shadow>
+
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+
+                                    <!-- Indicador de severidad -->
+                                    <Border Grid.Column="0"
+                                            StrokeThickness="0"
+                                            Padding="12"
+                                            WidthRequest="50"
+                                            HeightRequest="50">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{Binding Severidad, Converter={StaticResource SeveridadToColorConverter}}"/>
+                                        </Border.Background>
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="12"/>
+                                        </Border.StrokeShape>
+
+                                        <Label Text="&#xF071;"
+                                               FontFamily="FontAwesomeSolid"
+                                               FontSize="22"
+                                               TextColor="White"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+
+                                    <!-- Información de la alerta -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                                        <Label Text="{Binding TipoEvento}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+
+                                        <HorizontalStackLayout Spacing="5">
+                                            <Label Text="&#xF017;"
+                                                   FontFamily="FontAwesomeSolid"
+                                                   FontSize="12"
+                                                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+                                                   VerticalOptions="Center"/>
+                                            <Label Text="{Binding MarcaTiempo, StringFormat='{0:dd/MM/yyyy HH:mm}'}"
+                                                   FontSize="13"
+                                                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"/>
+                                        </HorizontalStackLayout>
+
+                                        <Border Padding="8,4"
+                                                HorizontalOptions="Start">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="{Binding Severidad, Converter={StaticResource SeveridadToColorConverter}}"/>
+                                            </Border.Background>
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="8"/>
+                                            </Border.StrokeShape>
+                                            <Label Text="{Binding Severidad}"
+                                                   FontSize="11"
+                                                   FontAttributes="Bold"
+                                                   TextColor="White"/>
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <!-- Estado procesado -->
+                                    <VerticalStackLayout Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                                        <Border Padding="8"
+                                                WidthRequest="35"
+                                                HeightRequest="35"
+                                                IsVisible="{Binding Procesado}">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="#4CAF50"/>
+                                            </Border.Background>
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="8"/>
+                                            </Border.StrokeShape>
+                                            <Label Text="&#xF00C;"
+                                                   FontFamily="FontAwesomeSolid"
+                                                   FontSize="14"
+                                                   TextColor="White"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center"/>
+                                        </Border>
+
+                                        <Border Padding="8"
+                                                WidthRequest="35"
+                                                HeightRequest="35"
+                                                BackgroundColor="{StaticResource Primary}"
+                                                IsVisible="{Binding Procesado, Converter={StaticResource InvertedBoolConverter}}">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="8"/>
+                                            </Border.StrokeShape>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type alertas:AlertasViewModel}}, Path=MarcarComoLeidaCommand}"
+                                                                     CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>
+                                            <Label Text="&#xF0E0;"
+                                                   FontFamily="FontAwesomeSolid"
+                                                   FontSize="14"
+                                                   TextColor="White"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center"/>
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                </Grid>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </RefreshView>
+
+        <!-- Indicador de carga -->
+        <ActivityIndicator Grid.Row="1"
+                          IsRunning="{Binding IsLoading}"
+                          IsVisible="{Binding IsLoading}"
+                          Color="{StaticResource Primary}"
+                          HeightRequest="40"
+                          WidthRequest="40"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center"/>
+
+    </Grid>
+
+</ContentPage>

@@ -1,10 +1,11 @@
-using Phanteon.Services.Storage;
 using Phanteon.Services.Navigation;
 
 namespace Phanteon.Services.Auth
 {
     /// <summary>
-    /// Servicio de autenticación para gestionar el estado del usuario
+    /// Servicio de autenticación para gestionar operaciones de autenticación
+    /// (SRP: Solo gestiona operaciones de autenticación, delegando sesión y navegación)
+    /// (ISP: Interfaz segregada - solo operaciones de auth)
     /// </summary>
     public interface IAuthService
     {
@@ -16,50 +17,51 @@ namespace Phanteon.Services.Auth
         Task LogoutAsync();
     }
 
+    /// <summary>
+    /// Implementación de IAuthService
+    /// (DIP: Depende de abstracciones ISessionManager e INavigationService)
+    /// (OCP: Abierto a extensión - podemos agregar más funcionalidad sin modificar código existente)
+    /// </summary>
     public class AuthService : IAuthService
     {
-        private readonly ISecureStorageService _secureStorageService;
+        private readonly ISessionManager _sessionManager;
         private readonly INavigationService _navigationService;
 
-        public AuthService(ISecureStorageService secureStorageService, INavigationService navigationService)
+        public AuthService(ISessionManager sessionManager, INavigationService navigationService)
         {
-            _secureStorageService = secureStorageService;
+            _sessionManager = sessionManager;
             _navigationService = navigationService;
         }
 
         public async Task<bool> IsUserLoggedInAsync()
         {
-            var userId = await _secureStorageService.GetAsync("user_id");
-            return !string.IsNullOrEmpty(userId);
+            return await _sessionManager.HasActiveSessionAsync();
         }
 
         public async Task<string?> GetCurrentUserIdAsync()
         {
-            return await _secureStorageService.GetAsync("user_id");
+            return await _sessionManager.GetUserIdAsync();
         }
 
         public async Task<string?> GetCurrentUserNameAsync()
         {
-            return await _secureStorageService.GetAsync("user_name");
+            return await _sessionManager.GetUserNameAsync();
         }
 
         public async Task<string?> GetCurrentUserEmailAsync()
         {
-            return await _secureStorageService.GetAsync("user_email");
+            return await _sessionManager.GetUserEmailAsync();
         }
 
         public async Task<string?> GetCurrentUserRoleAsync()
         {
-            return await _secureStorageService.GetAsync("user_role");
+            return await _sessionManager.GetUserRoleAsync();
         }
 
         public async Task LogoutAsync()
         {
-            // Limpiar toda la información del usuario
-            _secureStorageService.Remove("user_id");
-            _secureStorageService.Remove("user_name");
-            _secureStorageService.Remove("user_email");
-            _secureStorageService.Remove("user_role");
+            // Limpiar sesión
+            await _sessionManager.ClearSessionAsync();
 
             // Navegar a Login
             await _navigationService.NavigateToAsync("//Login");

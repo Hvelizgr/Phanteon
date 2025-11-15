@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dispositivos="clr-namespace:Phanteon.Features.Dispositivos.ViewModels"
+             xmlns:models="clr-namespace:Phanteon.Models"
+             x:Class="Phanteon.Features.Dispositivos.Views.DispositivosPage"
+             x:DataType="dispositivos:DispositivosViewModel"
+             Title="Dispositivos"
+             BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#1A1A1A}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior>
+            <BackButtonBehavior.IconOverride>
+                <FontImageSource FontFamily="FontAwesomeSolid"
+                                Glyph="&#xF053;"
+                                Size="20"
+                                Color="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+            </BackButtonBehavior.IconOverride>
+        </BackButtonBehavior>
+    </Shell.BackButtonBehavior>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Header con estadísticas -->
+        <VerticalStackLayout Grid.Row="0" Padding="20" Spacing="15">
+
+            <!-- Título y botón agregar -->
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Grid.Column="0"
+                       Text="Mis Dispositivos"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+
+                <Border Grid.Column="1"
+                        BackgroundColor="{StaticResource Primary}"
+                        StrokeThickness="0"
+                        Padding="12"
+                        WidthRequest="50"
+                        HeightRequest="50">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="25"/>
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AddDispositivoCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="&#xF067;"
+                           FontFamily="FontAwesomeSolid"
+                           FontSize="20"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
+            </Grid>
+
+            <!-- Estadísticas -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                <!-- Dispositivos Activos -->
+                <Border Grid.Column="0"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#2A2A2A}"
+                        StrokeThickness="0"
+                        Padding="20,15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Offset="0,4" Radius="10" Opacity="0.08"/>
+                    </Border.Shadow>
+
+                    <HorizontalStackLayout Spacing="15">
+                        <Border BackgroundColor="{AppThemeBinding Light=#E8F5E9, Dark=#1B5E20}"
+                                StrokeThickness="0"
+                                Padding="12"
+                                WidthRequest="50"
+                                HeightRequest="50">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12"/>
+                            </Border.StrokeShape>
+                            <Label Text="&#xF2F2;"
+                                   FontFamily="FontAwesomeSolid"
+                                   FontSize="22"
+                                   TextColor="#4CAF50"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                            <Label Text="{Binding DispositivosActivosCount}"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+                            <Label Text="Activos"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Dispositivos Inactivos -->
+                <Border Grid.Column="1"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#2A2A2A}"
+                        StrokeThickness="0"
+                        Padding="20,15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Offset="0,4" Radius="10" Opacity="0.08"/>
+                    </Border.Shadow>
+
+                    <HorizontalStackLayout Spacing="15">
+                        <Border BackgroundColor="{AppThemeBinding Light=#FFEBEE, Dark=#5D1F1F}"
+                                StrokeThickness="0"
+                                Padding="12"
+                                WidthRequest="50"
+                                HeightRequest="50">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12"/>
+                            </Border.StrokeShape>
+                            <Label Text="&#xF057;"
+                                   FontFamily="FontAwesomeSolid"
+                                   FontSize="22"
+                                   TextColor="#F44336"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                            <Label Text="{Binding DispositivosInactivosCount}"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+                            <Label Text="Inactivos"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Barra de búsqueda -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2A2A2A}"
+                    StrokeThickness="0"
+                    Padding="15,10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#000000" Offset="0,2" Radius="5" Opacity="0.05"/>
+                </Border.Shadow>
+
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                    <Label Grid.Column="0"
+                           Text="&#xF002;"
+                           FontFamily="FontAwesomeSolid"
+                           FontSize="18"
+                           TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+                           VerticalOptions="Center"/>
+
+                    <Entry Grid.Column="1"
+                           Text="{Binding SearchText}"
+                           Placeholder="Buscar dispositivos..."
+                           BackgroundColor="Transparent"
+                           TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"
+                           PlaceholderColor="{AppThemeBinding Light=#999999, Dark=#666666}"/>
+                </Grid>
+            </Border>
+
+        </VerticalStackLayout>
+
+        <!-- Lista de dispositivos -->
+        <RefreshView Grid.Row="1"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshDispositivosCommand}"
+                     RefreshColor="{StaticResource Primary}">
+
+            <CollectionView ItemsSource="{Binding Dispositivos}"
+                           SelectionMode="None"
+                           Margin="20,0,20,20">
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Spacing="15"
+                                        Padding="40">
+                        <Label Text="&#xF2DB;"
+                               FontFamily="FontAwesomeSolid"
+                               FontSize="60"
+                               TextColor="{AppThemeBinding Light=#CCCCCC, Dark=#555555}"
+                               HorizontalOptions="Center"/>
+                        <Label Text="No hay dispositivos"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"/>
+                        <Label Text="Agrega tu primer dispositivo"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#CCCCCC, Dark=#555555}"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Dispositivo">
+                        <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2A2A2A}"
+                                StrokeThickness="0"
+                                Padding="20"
+                                Margin="0,0,0,15">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15"/>
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Offset="0,4" Radius="10" Opacity="0.08"/>
+                            </Border.Shadow>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type dispositivos:DispositivosViewModel}}, Path=DispositivoSelectedCommand}"
+                                                     CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+
+                                <!-- Icono del dispositivo -->
+                                <Border Grid.Column="0"
+                                        StrokeThickness="0"
+                                        Padding="15"
+                                        WidthRequest="60"
+                                        HeightRequest="60">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="{StaticResource Primary}" Offset="0.0"/>
+                                            <GradientStop Color="{StaticResource Secondary}" Offset="1.0"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="15"/>
+                                    </Border.StrokeShape>
+
+                                    <Label Text="&#xF2DB;"
+                                           FontFamily="FontAwesomeSolid"
+                                           FontSize="26"
+                                           TextColor="White"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Border>
+
+                                <!-- Información del dispositivo -->
+                                <VerticalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                                    <Label Text="{Binding SerialDispositivo}"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#F5F5F5}"/>
+
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Label Text="&#xF796;"
+                                               FontFamily="FontAwesomeSolid"
+                                               FontSize="12"
+                                               TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+                                               VerticalOptions="Center"/>
+                                        <Label Text="{Binding MAC}"
+                                               FontSize="13"
+                                               TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"/>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Label Text="&#xF3C5;"
+                                               FontFamily="FontAwesomeSolid"
+                                               FontSize="12"
+                                               TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+                                               VerticalOptions="Center"/>
+                                        <Label Text="{Binding Direccion}"
+                                               FontSize="13"
+                                               TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+
+                                <!-- Estado e indicador -->
+                                <VerticalStackLayout Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                                    <!-- Badge de estado -->
+                                    <Border Padding="10,5">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{Binding Activo, Converter={StaticResource DispositivoActivoToColorConverter}}"/>
+                                        </Border.Background>
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10"/>
+                                        </Border.StrokeShape>
+
+                                        <Label Text="{Binding Activo}"
+                                               FontSize="12"
+                                               FontAttributes="Bold"
+                                               TextColor="White"
+                                               HorizontalOptions="Center"/>
+                                    </Border>
+
+                                    <!-- Flecha -->
+                                    <Label Text="&#xF054;"
+                                           FontFamily="FontAwesomeSolid"
+                                           FontSize="16"
+                                           TextColor="{AppThemeBinding Light=#CCCCCC, Dark=#555555}"
+                                           HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </RefreshView>
+
+        <!-- Indicador de carga -->
+        <ActivityIndicator Grid.Row="1"
+                          IsRunning="{Binding IsLoading}"
+                          IsVisible="{Binding IsLoading}"
+                          Color="{StaticResource Primary}"
+                          HeightRequest="40"
+                          WidthRequest="40"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center"/>
+
+    </Grid>
+
+</ContentPage>
